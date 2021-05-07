@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Component - Video Player</title>
+
+  <link rel="stylesheet" href="video-player.css">
+</head>
+<body>
+
+  <div class="video-playlist-section">
+
+    <div class="vp-featured">
+      <div class="vp-featured-inner">
+        <div class="vp-featured-iframe-wrapper">
+          <iframe id="vid-popup-1" class="image-popup-vid" src="https://www.youtube.com/embed/add-embed-code-here" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+        </div>
+        <div class="vp-featured-text">
+          <h4 class="vid-title-first">Why Choose Us?</h4>
+          <p class="vid-desc-first">We offer self-paced online and Livestream real estate courses.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vp-on-deck-wrapper">
+
+      <div class="vp-on-deck">
+        <div class="vp-on-deck-inner">
+          <div class="vp-on-deck-image-wrapper">
+            <img id="vid-popup-2" class="image-popup-vid video-active" src="/screenshot-of-video-thumbnail"/>
+          </div>
+          <div class="vp-on-deck-inner-text">
+            <h4 class="vid-title">Why Choose Us?</h4>
+            <p class="vid-desc">We offer self-paced online and Livestream real estate courses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="vp-on-deck">
+        <div class="vp-on-deck-inner">
+          <div class="vp-on-deck-image-wrapper">
+            <img id="vid-popup-3" class="image-popup-vid" src="/screenshot-of-video-thumbnail"/>
+          </div>
+          <div class="vp-on-deck-inner-text">
+            <h4 class="vid-title">Online Real Estate Courses</h4>
+            <p class="vid-desc">Get your real estate license with our online self-paced and Livestream real estate courses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="vp-on-deck">
+        <div class="vp-on-deck-inner">
+          <div class="vp-on-deck-image-wrapper">
+            <img id="vid-popup-4" class="image-popup-vid" src="/screenshot-of-video-thumbnail"/>
+          </div>
+          <div class="vp-on-deck-inner-text">
+            <h4 class="vid-title">Online &amp; Livestreaming Real Estate Courses - We're Open!</h4>
+            <p class="vid-desc">Online real estate classes are self-paced while Livestream is instructor-led in real time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="video-player.js"></script>
+
+</body>
+</html>
