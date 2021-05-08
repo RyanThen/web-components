@@ -1,4 +1,4 @@
-// ADD FULL WIDTH TO SPECIFIC TOP LEVEL NAV ITEMS //
+// ADD FULL WIDTH CLASS TO DESIRED TOP LEVEL NAV ITEMS //
 /* Declare full width sub nav items here, then include each variable in the array fullWidthSubNavItems */
 var fullWidthSubNavItem1 = document.getElementById("menu-item-19131").querySelector("ul");
 var fullWidthSubNavItem2 = document.getElementById("menu-item-18050").querySelector("ul");
