@@ -1,0 +1,42 @@
+.cards__container { display: flex; justify-content: space-around; align-items: start; flex-wrap: wrap; }
+
+/*** Comment out below two lines of code to display ribbons on all cards ***/
+.card__wrapper:not(:first-of-type) { margin-top: 30px; }
+.card__wrapper:not(:first-of-type) .card__ribbon--top { display: none; }
+/*** Comment out above two lines of code to display ribbons on all cards ***/
+
+.card__ribbon--top { display: flex; align-items: center; justify-content: center; height: 30px; width: 90%; margin: 0 auto; color: white; background-color: #243065; border-radius: 10px 10px 0 0; text-align: center; }
+.card__ribbon--top span { font-size: 16px; }
+
+.card__wrapper--inner { max-width: 320px; padding-bottom: 20px; border: 2px solid #003366; box-shadow: 2px 3px 3px lightgrey; border-radius: 8px; background-color: white; }
+
+.card__title { color: #243065; text-align: center; font-size: 24px; margin-bottom: 0; padding: 15px 0; }
+.card__price { display: flex; justify-content: center; align-items: center; width: 100%; text-align: center; font-size: 24px; color: #243065; padding: 18px 0; border-top: 1px solid lightgrey; border-bottom: 1px solid lightgrey; }
+.strike { position: relative; display: inline-block; font-size: 30px; color: #243065; text-decoration: none;  margin-right: 8px; }
+.strike:after { content: ""; position: absolute; bottom: 0; left: 0; border-top: 3px solid red; height: 50%; height: calc(50% - 1px); width: 100%; transform: rotateZ(-15deg); }
+
+.card__button--wrapper { text-align: center; margin: 35px 0 10px 0; }
+.card__button--cta { font-size: 16px; color: white; background-color: #f58121; text-decoration: none; text-transform: uppercase; font-weight: 500; margin: 35px 0 25px 0; padding: 10px 50px; border-radius: 3px; box-shadow: 2px 3px 3px lightgrey; transition: 325ms; }
+.card__button--cta:hover { background-color: #ffa63b !important; transition: 325ms; }
+
+.card__content--container { padding: 25px 15px 0 15px; }
+.card__content--title { font-size: 16px; text-decoration: underline; margin-top: 0; }
+.card__content--title:not(:first-of-type) { margin-top: 25px; }
+
+.card__content--list { list-style-type: none; padding-left: 0; }
+.card__content--list:last-of-type { margin-bottom: 18px; }
+.card__content--list-item { margin: 10px 0; position: relative; display: flex; justify-content: space-between; }
+.card__content--list-item:first-of-type { margin: 15px 0 10px 0; }
+.card__content--list-item-descriptor { display: flex; }
+
+.card__content--leading-icon { color: #243065; padding-right: 3px; }
+.card__content--tooltip-container { position: relative; display: flex; flex-direction: row; padding-left: 3px; max-height: 17px; }
+.card__content--tooltip-icon { cursor: pointer; color: #141414; }
+.card__content--tooltip-box { position: absolute; bottom: 25px; right: -50px; display: inline-block; background-color: #333333; font-size: 15px; color: white; border-radius: 5px; padding: 8px; width: 225px; visibility: hidden; opacity: 0; transition: 350ms; }
+.card__content--tooltip-icon:hover + .card__content--tooltip-box { visibility: visible; opacity: 0.9; transition: 350ms; }
+
+@media(max-width:600px) {
+	.card__container { flex-direction: column; align-items: center !important; }
+	.card__wrapper:not(:first-of-type) { margin-top: 30px; }
+	.card__content--tooltip-box { right: 0 !important; }
+}
