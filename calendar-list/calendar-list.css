@@ -1,0 +1,10 @@
+.calendar { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 12px; }
+.calendar__single-container { display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 20px 0; background-color: rgb(240, 240, 240); border-radius: 5px; }
+
+.calendar__single-content-container { display: flex; }
+.calendar__date-container { display: flex; flex-direction: column; justify-content: center; align-items: center; margin: auto 25px auto 15px; text-align: center; padding: 20px; color: white; background-color: rgb(78, 78, 78); width: 65px; height: 65px; border-radius: 50%; }
+
+.calendar__content-row-text { margin-top: 0; }
+.calendar__course-title { margin: 15px 0; font-size: 18px; }
+
+.calendar__bubble-container { display: inline-block; padding: 6px 14px; margin-right: 12px; color: white; background-color:rgb(78, 78, 78); border-radius: 25px; }
