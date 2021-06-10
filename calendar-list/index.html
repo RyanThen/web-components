@@ -3,114 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Document</title>
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" type="text/css" media="all">
+    <link rel="stylesheet" href="calendar-list.css">
 </head>
 <body>
-
-    <style>
-      .calendar { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 12px; }
-      .calendar__single-container { display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 20px 0; background-color: rgb(240, 240, 240); border-radius: 5px; }
-
-      .calendar__single-content-container { display: flex; }
-      .calendar__date-container { display: flex; flex-direction: column; justify-content: center; align-items: center; margin: auto 25px auto 15px; text-align: center; padding: 20px; color: white; background-color: rgb(78, 78, 78); width: 65px; height: 65px; border-radius: 50%; }
-
-      .calendar__content-row-text { margin-top: 0; }
-
-      .calendar__bubble-container { display: inline-block; padding: 6px 14px; margin-right: 12px; color: white; background-color:rgb(78, 78, 78); border-radius: 25px; }
-    </style>
-
 
     <!-- Calendar Container -->
     <div class="calendar"></div>
 
-
-    <script>
-
-    const calendar = document.querySelector('.calendar');
-    const now = new Date();
-    const timeZone = 'ET';
-
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    //*** DATA ***//
-    const data = [
-        ['Real Estate Prelicensing', new Date('5/5/2021'), '12:00 pm', 'M, W, F', 'Phoenix'],
-        ['Real Estate Prelicensing', new Date('6/3/2021'), '11:00 am', 'M, T, Th', 'Tucson'],
-        ['Real Estate Prelicensing', new Date('7/3/2021'), '11:00 am', 'T, Th', 'Tempe'],
-        ['Real Estate Prelicensing', new Date('7/23/2021'), '11:00 am', 'M, T, Th', 'Tucson'],
-        ['Real Estate Prelicensing', new Date('8/5/2021'), '11:00 am', 'M, T, Th, F', 'Tucson'],
-        ['Mortgage Broker Licensing', new Date('8/10/2021'), '9:00 am', 'M, T, Th, F', 'Tucson'],
-        ['Continuing Education', new Date('9/6/2021'), '3:00 pm', 'M, Th, F', 'Tucson'],
-        ['Real Estate Prelicensing', new Date('9/29/2021'), '5:00 pm', 'M, T, Th, F', 'Tucson'],
-        ['Real Estate Prelicensing', new Date('10/25/2021'), '6:00 pm', 'M, W, F', 'Tempe']
-    ];
-
-    // Filter data into new array of upcoming courses
-    const upcomingCourses = data.filter(upcomingCourse => now < upcomingCourse[1]);
-
-    // Render front end markup
-    const createMarkup = function createMarkup(upcomingCourses) {
-        upcomingCourses.forEach((upcomingCourse, index) => {
-
-            if(index > 7) return; // Set limit for number of calendar entries
-
-            const markup = `
-            <div class="calendar__single-container">
-
-                <div class="calendar__single-content-container">
-
-                    <div class="calendar__date-container">
-                        <div class="calendar__date--month">${monthNames[upcomingCourse[1].getMonth()]}</div>
-                        <div class="calendar__date--day">${upcomingCourse[1].getDate()}</div>
-                    </div>
-
-                    <div class="calendar__content-rows-container">
-
-                        <div class="calendar__content-row calendar__content-row-1">
-                            <p class="calendar__content-row-text">
-                                <span class="calendar__content-row--date">${dayNames[upcomingCourse[1].getDay()]}, ${monthNames[upcomingCourse[1].getMonth()]} ${upcomingCourse[1].getDate()}</span> @ 
-                                <span class="calendar__content-row--time">${upcomingCourse[2]}</span> <span class="calendar__content-row--time-zone">${timeZone}</span>
-                            </p>
-                        </div>
-
-                        <div class="calendar__content-row calendar__content-row-2">
-                            <h4 class="calendar__course-title">${upcomingCourse[0]}</h4>
-                        </div>
-
-                        <div class="calendar__content-row calendar__content-row-3">
-                            <div class="calendar__bubble-container">
-                                <div class="calendar__bubble"><i class="fas fa-calendar-alt"></i> ${upcomingCourse[3]}</div>
-                            </div>
-                            <div class="calendar__bubble-container">
-                                <div class="calendar__bubble"><i class="fas fa-location-arrow"></i> ${upcomingCourse[4]}</div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                            
-                <div class="btn-container">
-                    <a href="#" class="btn">Register Now</a>
-                </div>
-                
-            </div>`;
-
-            // Inject markup onto page
-            calendar.insertAdjacentHTML('beforeend', markup);   
-
-        // }
-        });
-
-    };
-    createMarkup(upcomingCourses);
-
-    </script>
-
+    <script src="calendar-list.js"></script>
+    
 </body>
 </html>
