@@ -1,6 +1,6 @@
 "use strict";
 
-// Randomize partners inside accordions
+//// Randomize cards inside accordions ////
 const jobOpeningsCards = document.querySelectorAll( ".job-openings-container .fp-card-container" );
 const jobOpeningsCardsArr = [...jobOpeningsCards];
 const jobOpeningsContainter = document.querySelector( ".job-openings-container" );
@@ -36,7 +36,7 @@ const randomizeElements = function (elementArray, elementContainer) {
 randomizeElements(jobOpeningsCardsArr, jobOpeningsContainter);
 randomizeElements(hiringBrokeragesCardsArr, hiringBrokeragesContainer);
 
-// Accordion functionality
+//// Accordion functionality ////
 const accordionTitle1 = jQuery( "#accordion-title-1" );
 const accordionTitle2 = jQuery( "#accordion-title-2" );
 const jobOpeningsContainerOuter = jQuery( ".job-openings-container-outer" );
