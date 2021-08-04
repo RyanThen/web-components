@@ -42,28 +42,24 @@ const accordionTitle2 = jQuery( "#accordion-title-2" );
 const jobOpeningsContainerOuter = jQuery( ".job-openings-container-outer" );
 const hiringBrokeragesContainerOuter = jQuery( ".hiring-brokerages-container-outer" );
 
-accordionTitle1.click(function () {
-  jobOpeningsContainerOuter.slideToggle( "slow" );
-  if (accordionTitle1.hasClass( "acc-open" )) {
-    document.querySelector( ".fa-plus-1" ).style.display = "block";
-    document.querySelector( ".fa-minus-1" ).style.display = "none";
-    accordionTitle1.removeClass("acc-open");
-  } else {
-    document.querySelector( ".fa-plus-1" ).style.display = "none";
-    document.querySelector( ".fa-minus-1" ).style.display = "block";
-    accordionTitle1.addClass( "acc-open" );
-  }
-});
+function accOpenClose(e) {
+    const groupTitle = e.currentTarget;
+    const groupContainer = groupTitle.parentElement.nextElementSibling.classList.contains("job-openings-container-outer") ? jobOpeningsContainerOuter : hiringBrokeragesContainerOuter;
+    
+    // open/close container
+    groupContainer.slideToggle( "slow" );
 
-accordionTitle2.click(function () {
-  hiringBrokeragesContainerOuter.slideToggle( "slow" );
-  if (accordionTitle2.hasClass( "acc-open" )) {
-    document.querySelector( ".fa-plus-2" ).style.display = "block";
-    document.querySelector( ".fa-minus-2" ).style.display = "none";
-    accordionTitle2.removeClass( "acc-open" );
-  } else {
-    document.querySelector( ".fa-plus-2" ).style.display = "none";
-    document.querySelector( ".fa-minus-2" ).style.display = "block";
-    accordionTitle2.addClass( "acc-open" );
-  }
-});
+    // icon toggle from plus to minus
+    if (groupTitle.classList.contains( "acc-open" )) {
+      groupTitle.querySelector( ".fa-plus" ).style.display = "block";
+      groupTitle.querySelector( ".fa-minus" ).style.display = "none";
+      groupTitle.classList.remove( "acc-open" );
+    } else {
+      groupTitle.querySelector( ".fa-plus" ).style.display = "none";
+      groupTitle.querySelector( ".fa-minus" ).style.display = "block";
+      groupTitle.classList.add( "acc-open" );
+    }
+}
+
+accordionTitle1.click(accOpenClose);
+accordionTitle2.click(accOpenClose);
