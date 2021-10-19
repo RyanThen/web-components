@@ -1,7 +1,7 @@
-// Keep track of number of package cards
-const $numberOfPackages = $('.cre__grid-card');
+// keep track of number of package cards
+const $numberOfPackages = $('.cre__grid-card').length;
 
-// Build value prop items on mobile
+////--- Build value prop items on mobile ---\\\\
 const $valuePropItems = $('.cre__value-prop-container');
 
 let $valuePropHTML;
@@ -40,7 +40,7 @@ $.each($valuePropItems, function(i, el) {
 //}
 
 
-// Value props click event
+////--- Value props click event ---\\\\
 $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) { 
   const $this = $(this);
   
@@ -50,8 +50,10 @@ $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) {
   // animate value prop area open/close
   if($this.find('.cre__value-prop-arrow').hasClass('rotate-animation')) {
     $this.find('.cre__value-prop-arrow').removeClass('rotate-animation');
+    $this.find('.cre__value-prop-heading').css({ fontWeight: 400, transition: '350ms' })
   } else {
     $this.find('.cre__value-prop-arrow').addClass('rotate-animation');
+    $this.find('.cre__value-prop-heading').css({ fontWeight: 700, transition: '350ms' })
   }
 });
 
@@ -69,40 +71,54 @@ $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) {
 //
 //});
 
-// Mobile package navigation (next/previous arrow click)
+////--- Mobile package navigation (next/previous arrow click) ---\\\\
 const $carouselArrows = $('.cre__carousel-arrow');
 const $mobilePrevious = $('.cre__mobile-previous');
 const $mobileNext = $('.cre__mobile-next');
 
-
 let crePackageCounter = 1;
 
 $carouselArrows.on('click', function(e){
-  
+  console.log(e.target);
   if(e.target.parentElement.classList.contains('cre__mobile-previous')) {
     $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show');
     crePackageCounter--;
-    if(crePackageCounter < 1) crePackageCounter = $numberOfPackages.length;
+    if(crePackageCounter < 1) crePackageCounter = $numberOfPackages;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show');
   }
   
   if(e.target.parentElement.classList.contains('cre__mobile-next')) {  
     $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show'); 
     crePackageCounter++;
-    if(crePackageCounter > $numberOfPackages.length) crePackageCounter = 1;
+    if(crePackageCounter > $numberOfPackages) crePackageCounter = 1;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show'); 
-  }
+  }  
   
 });
 
 
 // Delivery method dropdown
+const $deliveryMethodDropdownContainer = $('.cre__delivery-method-dropdown-container');
 const $deliveryMethodClickable = $('.cre__delivery-method-clickable');
 const $deliveryMethodDropdown = $('.cre__delivery-method-dropdown');
 
+let arrowState = 'no-rotate';
+
 $deliveryMethodClickable.on('click', function(){
   $deliveryMethodDropdown.slideToggle('fast');
-})
+  
+  if(arrowState === 'no-rotate') {
+    $('.cre__delivery-method-icon').css({ /*transform: 'rotate(180deg)'*/ transform: 'scaleY(-1)', transition: '350ms' });
+    arrowState = 'rotate';
+    return arrowState;
+  }
+  
+  if(arrowState === 'rotate') {
+    $('.cre__delivery-method-icon').css({ /*transform: 'rotate(0deg)'*/ transform: 'scaleY(1)', transition: '350ms' });
+    arrowState = 'no-rotate';
+    return arrowState;
+  }
+});
 
 
 
