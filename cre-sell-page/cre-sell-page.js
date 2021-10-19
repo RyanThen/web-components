@@ -121,7 +121,9 @@ $deliveryMethodClickable.on('click', function(){
 });
 
 
-
+// Top left grid dropdown height fix for tablet
+const creDropdownHeight = $('.cre__delivery-method-dropdown-container').height();
+$('.cre__delivery-method-dropdown-container-outer').css({ height: creDropdownHeight });
 
 
 
