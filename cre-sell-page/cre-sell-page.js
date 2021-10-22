@@ -1,6 +1,7 @@
 // keep track of number of package cards
 const $numberOfPackages = $('.cre__grid-card').length;
 
+
 ////--- Build value prop items on mobile ---\\\\
 const $valuePropItems = $('.cre__value-prop-container');
 
@@ -26,20 +27,6 @@ $.each($valuePropItems, function(i, el) {
 });
 
 
-//for(let i = 1; i < $valuePropItems.length + 1; i++) {
-//  // get value prop html
-//  const $valuePropHTML = $('.cre__grid-area-' + (i + 1)).clone().html();
-//  
-//  // inject corresponding html into each value prop
-//  const gridColumnCounter1 = 30 + i;
-//  const gridColumnCounter2 = 60 + i;
-//  const gridColumnCounter3 = 90 + i;
-//  $('.cre__grid-area-' + gridColumnCounter1).append($valuePropHTML);
-//  $('.cre__grid-area-' + gridColumnCounter2).append($valuePropHTML);
-//  $('.cre__grid-area-' + gridColumnCounter3).append($valuePropHTML);
-//}
-
-
 ////--- Value props click event ---\\\\
 $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) { 
   const $this = $(this);
@@ -50,10 +37,10 @@ $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) {
   // animate value prop area open/close
   if($this.find('.cre__value-prop-arrow').hasClass('rotate-animation')) {
     $this.find('.cre__value-prop-arrow').removeClass('rotate-animation');
-    $this.find('.cre__value-prop-heading').css({ fontWeight: 400, transition: '350ms' })
+    $this.find('.cre__value-prop-heading').css({ color: '#424242', transition: '350ms' })
   } else {
     $this.find('.cre__value-prop-arrow').addClass('rotate-animation');
-    $this.find('.cre__value-prop-heading').css({ fontWeight: 700, transition: '350ms' })
+    $this.find('.cre__value-prop-heading').css({ color: '#000000', transition: '350ms' })
   }
 });
 
@@ -71,33 +58,74 @@ $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) {
 //
 //});
 
-////--- Mobile package navigation (next/previous arrow click) ---\\\\
+
+////--- Mobile package navigation ---\\\\
+const $creCarouselDotsGridArea = $('.cre__carousel-dots-grid-area');
+
+// create carousel dots
+$.each($creCarouselDotsGridArea, function(i, dotGridArea) {
+  $.each($creCarouselDotsGridArea, function(j, dot){   
+    dotGridArea.insertAdjacentHTML('beforeend', `                                
+      <div class="cre__carousel-dot cre__carousel-dot-${j + 1}"></div>
+    `)
+  }) 
+});
+
+// add highlight class to first carousel dot
+$('.cre__carousel-dots-grid-area-1 .cre__carousel-dot-1').addClass('cre__dot--focus');
+
+// next/previous package arrow click
 const $carouselArrows = $('.cre__carousel-arrow');
 const $mobilePrevious = $('.cre__mobile-previous');
 const $mobileNext = $('.cre__mobile-next');
 
 let crePackageCounter = 1;
 
+// on arrow click
 $carouselArrows.on('click', function(e){
-  console.log(e.target);
+  
+  // if previous button click
   if(e.target.parentElement.classList.contains('cre__mobile-previous')) {
+    
+    // show correct package and hide all others
     $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show');
     crePackageCounter--;
     if(crePackageCounter < 1) crePackageCounter = $numberOfPackages;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show');
+    
+    // highlight correct carousel dot
+    if($('.cre__carousel-dots-grid-area-' + crePackageCounter).hasClass('cre__package-' + crePackageCounter)) {
+      // add highlight class to dot
+       $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
+      // remove highlight class from previous dot
+      $('.cre__carousel-dots-grid-area-' + (crePackageCounter + 1) + ' .cre__carousel-dot-' + (crePackageCounter + 1)).removeClass('cre__dot--focus')
+    }
+
   }
   
+  // if next button arrow click
   if(e.target.parentElement.classList.contains('cre__mobile-next')) {  
+    
+    // show correct package and hide all others
     $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show'); 
     crePackageCounter++;
     if(crePackageCounter > $numberOfPackages) crePackageCounter = 1;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show'); 
-  }  
+    
+    // highlight correct carousel dot
+    if($('.cre__carousel-dots-grid-area-' + crePackageCounter).hasClass('cre__package-' + crePackageCounter)) {
+      // add highlight class to dot
+       $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
+      // remove highlight class from previous dot
+      $('.cre__carousel-dots-grid-area-' + (crePackageCounter - 1) + ' .cre__carousel-dot-' + (crePackageCounter - 1)).removeClass('cre__dot--focus')
+    }
+    
+  }
   
 });
 
 
-// Delivery method dropdown
+////--- Delivery method dropdown ---\\\\
 const $deliveryMethodDropdownContainer = $('.cre__delivery-method-dropdown-container');
 const $deliveryMethodClickable = $('.cre__delivery-method-clickable');
 const $deliveryMethodDropdown = $('.cre__delivery-method-dropdown');
@@ -122,8 +150,19 @@ $deliveryMethodClickable.on('click', function(){
 
 
 // Top left grid dropdown height fix for tablet
-const creDropdownHeight = $('.cre__delivery-method-dropdown-container').height();
-$('.cre__delivery-method-dropdown-container-outer').css({ height: creDropdownHeight });
+const $creDropdownHeight = $('.cre__delivery-method-dropdown-container').height();
+$('.cre__delivery-method-dropdown-container-outer').css({ height: $creDropdownHeight });
+
+
+// Fixed border on final grid column (desktop)
+const mobilemediaQuery = window.matchMedia('(min-width: 850px)');
+if (mobilemediaQuery.matches) {
+  $('.cre__package-' + $numberOfPackages + ':not(.cre__grid-card), .cre__package-' + $numberOfPackages + ' .cre__card-container').css({ borderRight: '3px solid #d1d2d4' })
+}
+
+
+
+
 
 
 
