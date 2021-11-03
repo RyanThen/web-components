@@ -80,7 +80,6 @@ let crePackageCounter = 1;
 const $creCarouselDots = $('.cre__carousel-dot');
 
 $creCarouselDots.on('click', function(e){
-  const $this = $(this);
   // navigate to correct package
   $('.cre__grid-area').removeClass('cre__mobile-package-show');
   crePackageCounter = ($(this).index()) + 1;
