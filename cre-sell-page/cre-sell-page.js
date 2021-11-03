@@ -11,15 +11,15 @@ let gridColumnCounter2;
 let gridColumnCounter3;
 let gridColumnCounter4;
 
-$.each($valuePropItems, function(i, el) { 
-  // get value prop html
+$.each($valuePropItems, function(i) { 
+  // clone and store value prop html
   $valuePropHTML = $('.cre__grid-area-' + (i + 2)).clone().html();
          
-  // inject corresponding html into each value prop
-  gridColumnCounter1 = 31 + i;
-  gridColumnCounter2 = 61 + i;
-  gridColumnCounter3 = 91 + i;
-  gridColumnCounter4 = 121 + i;
+  // inject corresponding html into each value prop grid cell
+  gridColumnCounter1 = 41 + i;
+  gridColumnCounter2 = 81 + i;
+  gridColumnCounter3 = 121 + i;
+  gridColumnCounter4 = 161 + i;
   $('.cre__grid-area-' + gridColumnCounter1).append($valuePropHTML);
   $('.cre__grid-area-' + gridColumnCounter2).append($valuePropHTML);
   $('.cre__grid-area-' + gridColumnCounter3).append($valuePropHTML);
@@ -74,12 +74,27 @@ $.each($creCarouselDotsGridArea, function(i, dotGridArea) {
 // add highlight class to first carousel dot
 $('.cre__carousel-dots-grid-area-1 .cre__carousel-dot-1').addClass('cre__dot--focus');
 
-// next/previous package arrow click
+
+// enable carousel dots navigation
+let crePackageCounter = 1;
+const $creCarouselDots = $('.cre__carousel-dot');
+
+$creCarouselDots.on('click', function(e){
+  const $this = $(this);
+  // navigate to correct package
+  $('.cre__grid-area').removeClass('cre__mobile-package-show');
+  crePackageCounter = ($(this).index()) + 1;
+  $('.cre__package-' + (crePackageCounter)).addClass('cre__mobile-package-show');
+  // highlight correct dot
+  $('.cre__carousel-dot').removeClass('cre__dot--focus');
+  $('.cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
+})
+
+
+// next/previous mobile package arrow click
 const $carouselArrows = $('.cre__carousel-arrow');
 const $mobilePrevious = $('.cre__mobile-previous');
 const $mobileNext = $('.cre__mobile-next');
-
-let crePackageCounter = 1;
 
 // on arrow click
 $carouselArrows.on('click', function(e){
@@ -88,17 +103,17 @@ $carouselArrows.on('click', function(e){
   if(e.target.parentElement.classList.contains('cre__mobile-previous')) {
     
     // show correct package and hide all others
-    $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show');
+    $('.cre__grid-area').removeClass('cre__mobile-package-show');
     crePackageCounter--;
     if(crePackageCounter < 1) crePackageCounter = $numberOfPackages;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show');
     
     // highlight correct carousel dot
     if($('.cre__carousel-dots-grid-area-' + crePackageCounter).hasClass('cre__package-' + crePackageCounter)) {
-      // add highlight class to dot
-       $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
       // remove highlight class from previous dot
-      $('.cre__carousel-dots-grid-area-' + (crePackageCounter + 1) + ' .cre__carousel-dot-' + (crePackageCounter + 1)).removeClass('cre__dot--focus')
+      $('.cre__carousel-dot').removeClass('cre__dot--focus');
+      // add highlight class to dot
+      $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
     }
 
   }
@@ -107,17 +122,17 @@ $carouselArrows.on('click', function(e){
   if(e.target.parentElement.classList.contains('cre__mobile-next')) {  
     
     // show correct package and hide all others
-    $('.cre__package-' + crePackageCounter).removeClass('cre__mobile-package-show'); 
+    $('.cre__grid-area').removeClass('cre__mobile-package-show'); 
     crePackageCounter++;
     if(crePackageCounter > $numberOfPackages) crePackageCounter = 1;
     $('.cre__package-' + crePackageCounter).addClass('cre__mobile-package-show'); 
     
     // highlight correct carousel dot
     if($('.cre__carousel-dots-grid-area-' + crePackageCounter).hasClass('cre__package-' + crePackageCounter)) {
-      // add highlight class to dot
-       $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
       // remove highlight class from previous dot
-      $('.cre__carousel-dots-grid-area-' + (crePackageCounter - 1) + ' .cre__carousel-dot-' + (crePackageCounter - 1)).removeClass('cre__dot--focus')
+      $('.cre__carousel-dot').removeClass('cre__dot--focus');
+      // add highlight class to dot
+      $('.cre__carousel-dots-grid-area-' + crePackageCounter + ' .cre__carousel-dot-' + crePackageCounter).addClass('cre__dot--focus');
     }
     
   }
@@ -154,17 +169,20 @@ const $creDropdownHeight = $('.cre__delivery-method-dropdown-container').height(
 $('.cre__delivery-method-dropdown-container-outer').css({ height: $creDropdownHeight });
 
 
-// Fixed border on final grid column (desktop)
-const mobilemediaQuery = window.matchMedia('(min-width: 850px)');
-if (mobilemediaQuery.matches) {
+// Fixed border on last grid column (desktop)
+const mobileMediaQuery = window.matchMedia('(min-width: 850px)');
+if (mobileMediaQuery.matches) {
   $('.cre__package-' + $numberOfPackages + ':not(.cre__grid-card), .cre__package-' + $numberOfPackages + ' .cre__card-container').css({ borderRight: '3px solid #d1d2d4' })
 }
 
 
+// Set equal height card titles
+const $cardTitles = $('.cre__card-title');
+const cardTitleTallest = Math.max($cardTitles.height());
 
-
-
-
+$.each($cardTitles, function(i, cardTitle) {
+  $(cardTitle).css({ height: cardTitleTallest });
+});
 
 
 
