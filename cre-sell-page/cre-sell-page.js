@@ -95,7 +95,7 @@ const $carouselArrows = $('.cre__carousel-arrow');
 const $mobilePrevious = $('.cre__mobile-previous');
 const $mobileNext = $('.cre__mobile-next');
 
-// on arrow click
+// on arrow click (previous/next)
 $carouselArrows.on('click', function(e){
   
   // if previous button click
@@ -147,28 +147,29 @@ const $deliveryMethodDropdown = $('.cre__delivery-method-dropdown');
 let arrowState = 'no-rotate';
 
 $deliveryMethodClickable.on('click', function(){
+  // open/close dropdown
   $deliveryMethodDropdown.slideToggle('fast');
   
+  // animate arrow
   if(arrowState === 'no-rotate') {
     $('.cre__delivery-method-icon').css({ /*transform: 'rotate(180deg)'*/ transform: 'scaleY(-1)', transition: '350ms' });
     arrowState = 'rotate';
     return arrowState;
   }
-  
   if(arrowState === 'rotate') {
     $('.cre__delivery-method-icon').css({ /*transform: 'rotate(0deg)'*/ transform: 'scaleY(1)', transition: '350ms' });
     arrowState = 'no-rotate';
     return arrowState;
-  }
+  }  
 });
 
 
-// Top left grid dropdown height fix for tablet
+// Top left grid dropdown height fix for different screen sizes
 const $creDropdownHeight = $('.cre__delivery-method-dropdown-container').height();
 $('.cre__delivery-method-dropdown-container-outer').css({ height: $creDropdownHeight });
 
 
-// Fixed border on last grid column (desktop)
+// Fix border on last grid column (desktop)
 const mobileMediaQuery = window.matchMedia('(min-width: 850px)');
 if (mobileMediaQuery.matches) {
   $('.cre__package-' + $numberOfPackages + ':not(.cre__grid-card), .cre__package-' + $numberOfPackages + ' .cre__card-container').css({ borderRight: '3px solid #d1d2d4' })
@@ -182,10 +183,3 @@ const cardTitleTallest = Math.max($cardTitles.height());
 $.each($cardTitles, function(i, cardTitle) {
   $(cardTitle).css({ height: cardTitleTallest });
 });
-
-
-
-
-
-
-
