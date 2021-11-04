@@ -168,12 +168,12 @@
 
 .cre__grid-top-left { border-top: none; border-right: none; border-left: none; position: relative; }
 .cre__grid-top-left-inner-container { height: 100%; /*border-right: 1px solid darkgrey;*/ }
-.cre__delivery-method-intro-text { margin: 15px 8px; }
-.cre__delivery-method-intro-list { padding-left: 8px; list-style-type: none; }
+.cre__delivery-method-intro-text { margin: 15px 12px; }
+.cre__delivery-method-intro-list { padding-left: 12px; list-style-type: none; }
 .cre__delivery-method-intro-list-item { display: flex; align-items: center; padding: 10px 0; font-weight: 700; color: #243065; }
 .cre__delivery-method-text-icon { font-size: 20px; padding-right: 5px; }
 
-.cre__delivery-method-dropdown-container-outer { position: relative; margin: 15px 8px; }
+.cre__delivery-method-dropdown-container-outer { position: relative; margin: 15px 12px; }
 .cre__delivery-method-dropdown-container { position: absolute; width: 100%; background: white; border: 2px solid #666; border-radius: 10px; z-index: 9; }
 .cre__delivery-method-clickable { display: flex; justify-content: space-between; padding: 15px; cursor: pointer; }
 .cre__delivery-method-headline { font-size: 16px; font-weight: 700; color: #333; }

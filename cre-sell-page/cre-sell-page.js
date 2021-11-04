@@ -44,20 +44,6 @@ $('.cre__value-prop-container, .cre__value-prop-item').on('click', function(e) {
   }
 });
 
-//$('#grid-container').on('click', function(e) {
-//  
-//  const targetEl = $(e.target)[0].bind(this);
-//  const targetParentEl = $(targetEl.parentElement)[0];
-//  const targetParentParentEl = $(targetParentEl.parentElement)[0];
-//  
-//  console.log(targetParentParentEl);
-//  
-//  if(targetParentEl.classList.contains('cre__value-prop--clickable')) {
-//    targetParentParentEl.find('.cre__value-prop--expand').slideToggle('slow');
-//  }
-//
-//});
-
 
 ////--- Mobile package navigation ---\\\\
 const $creCarouselDotsGridArea = $('.cre__carousel-dots-grid-area');
