@@ -162,7 +162,7 @@
 
 .cre__btn-container { width: 100%; text-align: center; }
 .cre__btn { width: 65%; padding: 12px 35px; background-color: #f58121; color: white; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; box-shadow: 2px 3px 3px lightgrey; cursor: pointer; transition: 350ms; }
-.cre__btn:hover { background-color: #ffa63b; transition: 350ms; }
+.cre__btn:hover, .cre__btn:focus { background-color: #ffa63b; transition: 350ms; }
 .cre__btn-container--card { margin-bottom: 25px; }
 .cre__btn-container--grid-bottom { margin-top: 25px; }
 
