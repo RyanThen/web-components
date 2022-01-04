@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Accordion Randomize Contents</title>
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" type="text/css" media="all">
+  
+  <style>
+    .page-content-container { width: 100%; max-width: 1000px; margin: 0 auto; }
+    
+    .accordion-container { margin: 25px 0; }
+    .accordion-container:first-of-type { margin-top: 0; }
+    .accordion-container:last-of-type { margin-bottom: 0; }
+
+    .group-title { display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; margin: 0; background-color: #243065; color: white; font-size: 19px; border-radius: 2px; text-transform: uppercase; cursor: pointer; }
+    .group-title:hover .fas { transform: rotate(180deg); transform-origin: center center; transition: 250ms; }
+
+    .group-title .fa-minus { display: none; }
+
+    .accordion-content-container { display: none; margin: 0; }
+  </style>
+</head>
+<body>
+  
+  
+  <div class="page-content-container">
+   
+    <div class="accordion-container">
+      <div class="group-title-wrap">
+        <h2 class="group-title">Sales Pre-Licensing <i class="fas fa-plus"></i><i class="fas fa-minus"></i></h2>
+      </div>
+      
+      <div class="accordion-content-container randomize">
+         
+        <div class="single-card-container">
+          <p>Card 1</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 2</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 3</p>  
+        </div> 
+        <div class="single-card-container">
+          <p>Card 4</p>  
+        </div>
+                     
+      </div>
+    </div>
+    
+    <div class="accordion-container">
+      <div class="group-title-wrap">
+        <h2 class="group-title">Broker Pre-Licensing <i class="fas fa-plus"></i><i class="fas fa-minus"></i></h2>
+      </div>
+      
+      <div class="accordion-content-container randomize">
+
+        <div class="single-card-container">
+          <p>Card 1</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 2</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 3</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 4</p>  
+        </div>
+          
+      </div>
+    </div>
+    
+    <div class="accordion-container">
+      <div class="group-title-wrap">
+        <h2 class="group-title">Sales Post-Licnsing <i class="fas fa-plus"></i><i class="fas fa-minus"></i></h2>
+      </div>
+      
+      <div class="accordion-content-container randomize">
+         
+        <div class="single-card-container">
+          <p>Card 1</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 2</p>  
+        </div>
+        <div class="single-card-container">
+          <p>Card 3</p>  
+        </div> 
+        <div class="single-card-container">
+          <p>Card 4</p>  
+        </div> 
+                                              
+      </div>
+    </div>
+    
+  </div>
+  
+  
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
+  <script>
+  "use strict";
+    
+  //// Accordion Open/Close Functionality ////
+  const calendarAccordions = jQuery( ".calendar-accordion" );
+  const accordionContentContainer = jQuery( ".accordion-content-container" );
+  const groupTitleWrap = jQuery(".group-title-wrap");
+
+  function accOpenClose(e) {
+    const $this = $(this).parent();
+    const groupContainer = $this;
+    const groupTitle = groupContainer.find( ".group-title" );
+      
+    // open/close container
+    groupContainer.find( ".accordion-content-container" ).slideToggle( "slow" );
+
+    // icon toggle from plus to minus
+    if(groupTitle.hasClass( "acc-open" )) {
+      groupTitle.find( ".fa-plus" ).css({ display: "block" });
+      groupTitle.find( ".fa-minus" ).css({ display: "none" });
+      // update accordion state
+      groupTitle.removeClass( "acc-open" );
+    } else {
+      groupTitle.find( ".fa-plus" ).css({ display: "none" });
+      groupTitle.find( ".fa-minus" ).css({ display: "block" });
+      // update accordion state
+      groupTitle.addClass( "acc-open" );
+    }
+  }
+
+  groupTitleWrap.click(accOpenClose);
+    
+
+  //// Randomize Accordion Contents Functionality //// 
+  let randomizeIndex = 0;
+  let random;
+  const spacing = "<hr>";
+
+  // build randomized html inside containers
+  const randomizeElements = function (elementArray, elementContainer) {
+    while (randomizeIndex < elementArray.length) {
+      // generate random num between 0 and arraylength-1
+      random = Math.floor( Math.random() * elementArray.length );
+      // if element hasn't been marked as "selected"
+      if (!elementArray[random].classList.contains( "selected" )) {
+        elementContainer.insertAdjacentHTML( "beforeend", elementArray[random].outerHTML /* + spacing */ );
+        // mark element as selected
+        elementArray[random].classList.add( "selected" );
+        randomizeIndex++;
+      }
+    }
+    randomizeIndex = 0;
+  };
+    
+    
+  const accordionsArray = document.querySelectorAll(".accordion-container");
+    
+  accordionsArray.forEach((element, index) => {
+    const accordionContentContainer = element.querySelector(".accordion-content-container");
+    
+    if(accordionContentContainer.classList.contains("randomize")) {
+      const singleCardContainersArray = accordionContentContainer.querySelectorAll(".single-card-container");
+      
+      accordionContentContainer.innerHTML = "";
+      
+      randomizeElements(singleCardContainersArray, accordionContentContainer);
+    }
+    
+  }) 
+
+</script>
+  
+</body>
+</html>
