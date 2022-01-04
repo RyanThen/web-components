@@ -106,7 +106,44 @@
   <script>
   "use strict";
     
-  //// Accordion Open/Close Functionality ////
+  ////-- Randomize Accordion Contents Functionality --//// 
+  let randomizeIndex = 0;
+  let random;
+  const spacing = "<hr>";
+
+  // build randomized html inside containers
+  const randomizeElements = function (elementArray, elementContainer) {
+    while (randomizeIndex < elementArray.length) {
+      // generate random num between 0 and arraylength-1
+      random = Math.floor( Math.random() * elementArray.length );
+      // if element hasn't been marked as "selected"
+      if (!elementArray[random].classList.contains( "selected" )) {
+        elementContainer.insertAdjacentHTML( "beforeend", elementArray[random].outerHTML /* + spacing */ );
+        // mark element as selected
+        elementArray[random].classList.add( "selected" );
+        randomizeIndex++;
+      }
+    }
+    randomizeIndex = 0;
+  };
+    
+  const accordionsArray = document.querySelectorAll(".accordion-container");
+    
+  accordionsArray.forEach((element, index) => {
+    const accordionContentContainer = element.querySelector(".accordion-content-container");
+    
+    if(accordionContentContainer.classList.contains("randomize")) {
+      const singleCardContainersArray = accordionContentContainer.querySelectorAll(".single-card-container");
+      
+      accordionContentContainer.innerHTML = "";
+      
+      randomizeElements(singleCardContainersArray, accordionContentContainer);
+    }
+    
+  });
+    
+    
+  ////-- Accordion Open/Close Functionality --////
   const calendarAccordions = jQuery( ".calendar-accordion" );
   const accordionContentContainer = jQuery( ".accordion-content-container" );
   const groupTitleWrap = jQuery(".group-title-wrap");
@@ -135,44 +172,6 @@
 
   groupTitleWrap.click(accOpenClose);
     
-
-  //// Randomize Accordion Contents Functionality //// 
-  let randomizeIndex = 0;
-  let random;
-  const spacing = "<hr>";
-
-  // build randomized html inside containers
-  const randomizeElements = function (elementArray, elementContainer) {
-    while (randomizeIndex < elementArray.length) {
-      // generate random num between 0 and arraylength-1
-      random = Math.floor( Math.random() * elementArray.length );
-      // if element hasn't been marked as "selected"
-      if (!elementArray[random].classList.contains( "selected" )) {
-        elementContainer.insertAdjacentHTML( "beforeend", elementArray[random].outerHTML /* + spacing */ );
-        // mark element as selected
-        elementArray[random].classList.add( "selected" );
-        randomizeIndex++;
-      }
-    }
-    randomizeIndex = 0;
-  };
-    
-    
-  const accordionsArray = document.querySelectorAll(".accordion-container");
-    
-  accordionsArray.forEach((element, index) => {
-    const accordionContentContainer = element.querySelector(".accordion-content-container");
-    
-    if(accordionContentContainer.classList.contains("randomize")) {
-      const singleCardContainersArray = accordionContentContainer.querySelectorAll(".single-card-container");
-      
-      accordionContentContainer.innerHTML = "";
-      
-      randomizeElements(singleCardContainersArray, accordionContentContainer);
-    }
-    
-  }) 
-
 </script>
   
 </body>
