@@ -68,7 +68,7 @@ const createMarkup = function(upcomingCourses) {
             </div>
 
             <div class="btn-container">
-                <a href="${upcomingCourse[6]}" class="btn ${upcomingCourse[5] === 'Sold Out' ? 'btn-disabled' : ''}">${upcomingCourse[5] === 'Sold Out' ? 'Sold Out' : upcomingCourse[5]}</a>
+                <a href="${upcomingCourse[6]}" class="btn ${upcomingCourse[5] === 'Sold Out' ? 'btn-disabled' : ''}">${upcomingCourse[5] === 'Sold Out' ? 'Sold Out' : upcomingCourse[5] || 'Select'}</a>
             </div>
 
         </div>`;
