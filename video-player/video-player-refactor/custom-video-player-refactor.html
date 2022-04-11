@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    
+    <style>
+    
+    .vp-on-deck-wrapper { overflow-y: scroll; }
+
+    .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
+
+    .vp-featured { flex: 1.5; }
+    .vp-featured-inner { display: flex; flex-direction: column; }
+    .vp-featured-inner > p > iframe { padding-bottom: 15px; }
+    .vp-featured-text { display: flex; flex-direction: column; }
+    .vid-title-first, .vid-title { padding-bottom: 8px; }
+    .vp-featured-text > p { font-size: 16px; max-width: 560px; }
+
+    .vp-on-deck-wrapper { max-height: 350px; display: flex; flex-direction: column; flex: 1; justify-content: flex-start; border: 1px solid lightgrey; background-color: #F5F5F5; padding: 8px;}
+    .vp-on-deck-inner { display: flex; flex-direction: row; align-items: flex-start; }
+    .vp-on-deck-inner-text { display: flex; flex-direction: column; }
+    .vp-on-deck-inner > p > img { margin-right: 15px; }
+    .vp-on-deck-inner-text > p { font-size: 16px; }
+
+    .image-popup-vid { cursor: pointer; border: 2px solid transparent; box-sizing: border-box; transition: 350ms; }
+
+    .video-active { border: 2px solid darkorange; transition: 350ms; }
+
+    .vp-featured .image-popup-vid { width: 560px; }
+    .vp-on-deck-wrapper .image-popup-vid { width: 187px; }
+
+    @media(max-width: 600px) {
+      .video-playlist-section { flex-direction: column; }
+      #vid-popup-1 { width: 100%; }
+      .vp-on-deck-wrapper { overflow-y: initial; max-height: fit-content; }
+      .vp-on-deck-inner { flex-direction: column; }
+    }
+    
+    </style>
+    
+</head>
+<body>
+    
+  <div class="video-playlist-section" id="video-playlist-section">
+<!--
+     <div class="vp-featured">
+        <div class="vp-featured-inner">
+           <p><iframe id="vid-popup-1" class="image-popup-vid" src="https://www.youtube.com/embed/T27VErvS1L0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+           <div class="vp-featured-text">
+              <h4 class="vid-title-first">Video Title</h4>
+              <p class="vid-desc-first">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+           </div>
+        </div>
+     </div>
+     <div class="vp-on-deck-wrapper">
+        <div class="vp-on-deck">
+           <div class="vp-on-deck-inner">
+              <p><img id="vid-popup-2" class="image-popup-vid video-active" src="/wp-content/uploads/2021/01/youtube-preview-hondros-1.png" /></p>
+              <div class="vp-on-deck-inner-text">
+                 <h4 class="vid-title">#1 - Video Title</h4>
+                 <p class="vid-desc">#1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+           </div>
+        </div>
+        <div class="vp-on-deck">
+           <div class="vp-on-deck-inner">
+              <p><img id="vid-popup-3" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-2.png" /></p>
+              <div class="vp-on-deck-inner-text">
+                 <h4 class="vid-title">#2 - Video Title</h4>
+                 <p class="vid-desc">#2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+           </div>
+        </div>
+        <div class="vp-on-deck">
+           <div class="vp-on-deck-inner">
+              <p><img id="vid-popup-4" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-3.png" /></p>
+              <div class="vp-on-deck-inner-text">
+                 <h4 class="vid-title">#3 - Video Title</h4>
+                 <p class="vid-desc">#3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+           </div>
+        </div>
+        <div class="vp-on-deck">
+           <div class="vp-on-deck-inner">
+              <p><img id="vid-popup-5" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-3.png" /></p>
+              <div class="vp-on-deck-inner-text">
+                 <h4 class="vid-title">#4 - Video Title</h4>
+                 <p class="vid-desc">#4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </div>
+           </div>
+        </div>
+     </div>
+-->
+  </div>
+
+  <!--jQuery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
+  <script>
+    
+  //-- DATA For Videos --//
+  const videoData = [
+    {
+      url: 'https://www.youtube.com/embed/T27VErvS1L0',
+      name: '#1 - Video Title',
+      description: '#1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      id: 1
+    },
+    {
+      url: 'https://www.youtube.com/embed/kbIDpHNq_fA',
+      name: '#2 - Video Title',
+      description: '#2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      id: 2  
+    },
+    {
+      url: 'https://www.youtube.com/embed/P5aLvIlhA0A',
+      name: '#3 - Video Title',
+      description: '#3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      id: 3
+    },
+    {
+      url: 'https://www.youtube.com/embed/KDWATjZf8io',
+      name: '#4 - Video Title',
+      description: '#4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      id: 4
+    }
+  ];
+    
+    
+  // Build Video Player HTML //
+  const videoPlayerContainer = document.querySelector('#video-playlist-section');
+
+  let videoPlayerTemplate = ``;
+
+  const buildVideoPlayerHTML = function() {
+
+    videoData.forEach((el, i) => {
+      videoPlayerTemplate += `
+        <div class="vp-single-container">
+
+          <div class="vp-single-inner">
+            <p><iframe class="vid-iframe image-popup-vid" data-id="vid-id-${el.id}" src="${el.url === videoData[0].url ? el.url : ''}" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+
+            <div class="vp-text-container">
+              <h4 class="vid-title" data-id="vid-id-${el.id}">${el.name}</h4>
+              <p class="vid-desc">${el.description}</p>
+            </div>
+          </div>
+
+        </div>
+      `;
+
+    });
+
+    videoPlayerContainer.insertAdjacentHTML('afterbegin', videoPlayerTemplate);
+  }
+
+  buildVideoPlayerHTML();
+    
+    
+  // Video Player Functionality //
+
+  const featuredVideo = document.querySelector('.vp-single-container:first-of-type');
+  const videoLibrary = document.querySelectorAll('.vp-single-container:not(:first-of-type)');
+   
+  // Get all video titles, descriptions, iframes from the dom
+  const videoTitles = [...document.querySelectorAll('.vid-title')];
+  const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
+  const videoIframes = [...document.querySelectorAll('.vid-iframe')];
+    
+  // Get featured video titles, descriptions, iframes from the dom
+  const featuredVideoTitle = featuredVideo.querySelector('.vid-title');
+  const featuredVideoDescription = featuredVideo.querySelector('.vid-desc');
+  const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
+    
+  // Get video library titles, descriptions, iframes
+  const videoLibraryTitles = videoTitles.filter(title => title !== videoTitles[0]);
+  const videoLibraryDescriptions = videoDescriptions.filter(description => description !== videoDescriptions[0]);
+  const videoLibraryIframes = videoIframes.filter(iframe => iframe !== videoIframes[0]);
+    
+  // Convert video library variables to jQuery
+  const $videoLibraryTitles = $(videoLibraryTitles);
+  const $videoLibraryDescriptions = $(videoLibraryDescriptions);
+  const $videoLibraryIframes = $(videoLibraryIframes);
+    
+  // Get all elements that allow you to select a new video to play
+  const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryIframes ]
+    
+  // Click functionality for video library elements
+  $(allClickToChooseVideoElements).on('click', function(){
+    videoData.forEach((el, i) => {
+      if('vid-id-' + el.id === $(this).attr('data-id')) {
+        featuredVideoIframe.src = el.url;
+        featuredVideoTitle.textContent = el.name;
+        featuredVideoDescription.textContent = el.description;
+      }
+    })
+  });
+  
+  
+  // NEXT TASK IS TO MODIFY HTML SO I CAN ADD A CLICKABLE IMAGE TO THE VIDEO LIBRARY ELEMENTS
+ 
+    
+    
+    
+
+  // Variables
+//  var videoPopup1 = document.getElementById('vid-popup-1');
+//  var videoPopupImg2 = document.getElementById('vid-popup-2');
+//  var videoPopupImg3 = document.getElementById('vid-popup-3');
+//  var videoPopupImg4 = document.getElementById('vid-popup-4');
+//  var videoPopupImg5 = document.getElementById('vid-popup-5');
+//
+//  var videoPopups = document.querySelectorAll('.image-popup-vid');
+//
+//  var videoTitleFirst = document.querySelector('.vid-title-first');
+//  var videoTitles = document.querySelectorAll('.vid-title');
+//  var videoDescriptionsFirst = document.querySelector('.vid-desc-first');
+//  var videoDescriptions = document.querySelectorAll('.vid-desc');
+//
+//  var videoDescriptionsTextArray = [];
+//
+//  // Build above array of full video descriptions (unshortened strings)
+//  for (var i = 0; i < videoDescriptions.length; i++) {
+//    videoDescriptionsTextArray.push(videoDescriptions[i].textContent);
+//  }
+//
+//  // Functions
+//  var setVideoTitleDesc = function(arrayPosition) {
+//    videoTitleFirst.textContent = videoTitles[arrayPosition].textContent;
+//    videoDescriptionsFirst.textContent = videoDescriptionsTextArray[arrayPosition];
+//  }
+//
+//  var removeVideoActive = function() {
+//    for(var i = 0; i < videoPopups.length; i++) {
+//      videoPopups[i].classList.remove('video-active');
+//    }
+//  }
+//
+//  // Logic and Functionality
+//    // Set description excerpt and excerpt length
+//  for (var i = 0; i < videoDescriptions.length; i++) {
+//    videoDescriptions[i].textContent = (videoDescriptions[i].textContent).substr(0, 100) + '...';
+//  }
+//
+//  // Set start video value
+//  videoPopup1.src = 'https://www.youtube.com/embed/T27VErvS1L0';
+//  setVideoTitleDesc(0);
+//
+//  // Videos "on deck"
+//  videoPopupImg2.addEventListener('click', function() {
+//    videoPopup1.src = 'https://www.youtube.com/embed/T27VErvS1L0';
+//    setVideoTitleDesc(0);
+//    removeVideoActive();
+//    videoPopupImg2.classList.add('video-active');
+//  });
+//
+//  videoPopupImg3.addEventListener('click', function() {
+//    videoPopup1.src = 'https://www.youtube.com/embed/P5aLvIlhA0A';
+//    setVideoTitleDesc(1);
+//    removeVideoActive();
+//    videoPopupImg3.classList.add('video-active');
+//  });
+//
+//  videoPopupImg4.addEventListener('click', function() {
+//    videoPopup1.src = 'https://www.youtube.com/embed/KDWATjZf8io';
+//    setVideoTitleDesc(2);
+//    removeVideoActive();
+//    videoPopupImg4.classList.add('video-active');
+//  });
+//
+//  videoPopupImg5.addEventListener('click', function() {
+//    videoPopup1.src = 'https://www.youtube.com/embed/KDWATjZf8io';
+//    setVideoTitleDesc(3);
+//    removeVideoActive();
+//    videoPopupImg5.classList.add('video-active');
+//  });
+
+  </script>
+    
+</body>
+</html>
