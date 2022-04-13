@@ -5,8 +5,22 @@
     <title>Document</title>
     
     <style>
+      .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
+      
+      .featured-video-container { flex: 8; width: 100%; }
+      .vid-iframe { width: 700px; height: 395px; }
+      
+      .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; }
+      .video-library-container .vp-single-container { margin: 20px 0; }
+      .video-library-container .vp-single-container:first-of-type { margin-top: 0; }
+      .video-library-container .vp-single-inner { display: grid; grid-template-columns: 1fr 1fr; }
+      .vid-img { width: 100%; }
+      .vp-text-container {  }
+      .vid-title { margin: 0; padding: 0 5px }
+      .vid-desc { margin: 0; padding: 5px; }
     
-    .vp-on-deck-wrapper { overflow-y: scroll; }
+/*
+    .video-library-container { overflow-y: scroll; }
 
     .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
 
@@ -17,13 +31,13 @@
     .vid-title-first, .vid-title { padding-bottom: 8px; }
     .vp-featured-text > p { font-size: 16px; max-width: 560px; }
 
-    .vp-on-deck-wrapper { max-height: 350px; display: flex; flex-direction: column; flex: 1; justify-content: flex-start; border: 1px solid lightgrey; background-color: #F5F5F5; padding: 8px;}
-    .vp-on-deck-inner { display: flex; flex-direction: row; align-items: flex-start; }
-    .vp-on-deck-inner-text { display: flex; flex-direction: column; }
+    .video-library-container { max-height: 350px; display: flex; flex-direction: column; flex: 1; justify-content: flex-start; border: 1px solid lightgrey; background-color: #F5F5F5; padding: 8px;}
+    .video-library-container .vp-single-container { display: flex; flex-direction: row; align-items: flex-start; }
+    .video-library-container .vp-text-container { display: flex; flex-direction: column; }
     .vp-on-deck-inner > p > img { margin-right: 15px; }
     .vp-on-deck-inner-text > p { font-size: 16px; }
 
-    .image-popup-vid { cursor: pointer; border: 2px solid transparent; box-sizing: border-box; transition: 350ms; }
+    .vid-iframe { cursor: pointer; border: 2px solid transparent; box-sizing: border-box; transition: 350ms; }
 
     .video-active { border: 2px solid darkorange; transition: 350ms; }
 
@@ -36,63 +50,16 @@
       .vp-on-deck-wrapper { overflow-y: initial; max-height: fit-content; }
       .vp-on-deck-inner { flex-direction: column; }
     }
+*/
     
     </style>
     
 </head>
 <body>
     
-  <div class="video-playlist-section" id="video-playlist-section">
-<!--
-     <div class="vp-featured">
-        <div class="vp-featured-inner">
-           <p><iframe id="vid-popup-1" class="image-popup-vid" src="https://www.youtube.com/embed/T27VErvS1L0" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
-           <div class="vp-featured-text">
-              <h4 class="vid-title-first">Video Title</h4>
-              <p class="vid-desc-first">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-           </div>
-        </div>
-     </div>
-     <div class="vp-on-deck-wrapper">
-        <div class="vp-on-deck">
-           <div class="vp-on-deck-inner">
-              <p><img id="vid-popup-2" class="image-popup-vid video-active" src="/wp-content/uploads/2021/01/youtube-preview-hondros-1.png" /></p>
-              <div class="vp-on-deck-inner-text">
-                 <h4 class="vid-title">#1 - Video Title</h4>
-                 <p class="vid-desc">#1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-           </div>
-        </div>
-        <div class="vp-on-deck">
-           <div class="vp-on-deck-inner">
-              <p><img id="vid-popup-3" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-2.png" /></p>
-              <div class="vp-on-deck-inner-text">
-                 <h4 class="vid-title">#2 - Video Title</h4>
-                 <p class="vid-desc">#2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-           </div>
-        </div>
-        <div class="vp-on-deck">
-           <div class="vp-on-deck-inner">
-              <p><img id="vid-popup-4" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-3.png" /></p>
-              <div class="vp-on-deck-inner-text">
-                 <h4 class="vid-title">#3 - Video Title</h4>
-                 <p class="vid-desc">#3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-           </div>
-        </div>
-        <div class="vp-on-deck">
-           <div class="vp-on-deck-inner">
-              <p><img id="vid-popup-5" class="image-popup-vid" src="http://staging.hondros.com/wp-content/uploads/2021/01/youtube-preview-hondros-3.png" /></p>
-              <div class="vp-on-deck-inner-text">
-                 <h4 class="vid-title">#4 - Video Title</h4>
-                 <p class="vid-desc">#4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-           </div>
-        </div>
-     </div>
--->
-  </div>
+  <!-- Video Playlist Container -->
+  <div class="video-playlist-section" id="video-playlist-section"></div>
+
 
   <!--jQuery-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -100,33 +67,44 @@
   <script>
     
   //-- DATA For Videos --//
+  // Initial featured video must but placed first with both id: 1 and id: 2
   const videoData = [
     {
-      url: 'https://www.youtube.com/embed/T27VErvS1L0',
-      name: '#1 - Video Title',
-      description: '#1 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
+      title: 'Trabajando con Inquilinos',
+      description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
       id: 1
     },
     {
-      url: 'https://www.youtube.com/embed/kbIDpHNq_fA',
-      name: '#2 - Video Title',
-      description: '#2 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      id: 2  
+      url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
+      title: 'Trabajando con Inquilinos',
+      description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      id: 2
     },
     {
-      url: 'https://www.youtube.com/embed/P5aLvIlhA0A',
-      name: '#3 - Video Title',
-      description: '#3 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      id: 3
+      url: 'https://player.vimeo.com/video/698679349?h=d7f770ec95',
+      title: 'Trabajando con Compradores',
+      description: '¿Qué aprenderás en este taller?: Uso de las redes sociales para encontrar clients, Como Presentar y Negociar las ofertas, Como convertir clientes potenciales en citas, La entrevista con el comprador, y muchas cosas más.',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      id: 3 
     },
     {
-      url: 'https://www.youtube.com/embed/KDWATjZf8io',
-      name: '#4 - Video Title',
-      description: '#4 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      url: 'https://player.vimeo.com/video/698680002?h=ce5bf0faa2',
+      title: 'Tu Marca Personal',
+      description: '¿Qué aprenderás en este taller?: Como crear tu Marca personal y tu presencia en línea, Siete estrategias para vender sin vender en redes sociales, Establecer tu Misión como agente inmobiliario, Redactar tu comercial personal de 20 segundos,  y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
       id: 4
+    },
+    {
+      url: 'https://player.vimeo.com/video/698679105?h=10dfc6ede0',
+      title: 'Trabajando con Vendedores',
+      description: '¿Qué aprenderás en este taller?: Tres estrategias para encontrar clients, Pasos antes de tomar una propiedad para vender, La entrevista con el propietario “Listing presentation”, Como responder correctamente a las objeciones, y mucho cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      id: 5
     }
   ];
-    
     
   // Build Video Player HTML //
   const videoPlayerContainer = document.querySelector('#video-playlist-section');
@@ -137,18 +115,27 @@
 
     videoData.forEach((el, i) => {
       videoPlayerTemplate += `
-        <div class="vp-single-container">
+        ${el.id === 1 ? `<div class="featured-video-container">` : ''}
+        ${el.id === 2 ? `<div class="video-library-container">` : ''}
+          <div class="vp-single-container">
 
-          <div class="vp-single-inner">
-            <p><iframe class="vid-iframe image-popup-vid" data-id="vid-id-${el.id}" src="${el.url === videoData[0].url ? el.url : ''}" width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"></iframe></p>
+            <div class="vp-single-inner">
+              ${el.id === 1
+                ?
+                  `<iframe class="vid-iframe" data-id="vid-id-${el.id}" src="${el.url}" allowfullscreen="allowfullscreen"></iframe>` 
+                : 
+                  `<img src="${el.imageURL}" class="vid-img" data-id="vid-id-${el.id}">`
+              }
 
-            <div class="vp-text-container">
-              <h4 class="vid-title" data-id="vid-id-${el.id}">${el.name}</h4>
-              <p class="vid-desc">${el.description}</p>
+              <div class="vp-text-container">
+                <h4 class="vid-title" data-id="vid-id-${el.id}">${el.title}</h4>
+                <p class="vid-desc">${el.description}</p>
+              </div>
             </div>
-          </div>
 
-        </div>
+          </div>
+        ${el.id === 1 ? `</div>` : ''}
+        ${el.id === i.length + 1 ? `</div>` : ''}
       `;
 
     });
@@ -164,42 +151,41 @@
   const featuredVideo = document.querySelector('.vp-single-container:first-of-type');
   const videoLibrary = document.querySelectorAll('.vp-single-container:not(:first-of-type)');
    
-  // Get all video titles, descriptions, iframes from the dom
+  // Get all video titles, descriptions, and video library images from the dom
   const videoTitles = [...document.querySelectorAll('.vid-title')];
   const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
-  const videoIframes = [...document.querySelectorAll('.vid-iframe')];
+  const videoLibraryImages = [...document.querySelectorAll('.vid-img')];
     
   // Get featured video titles, descriptions, iframes from the dom
   const featuredVideoTitle = featuredVideo.querySelector('.vid-title');
   const featuredVideoDescription = featuredVideo.querySelector('.vid-desc');
   const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
     
-  // Get video library titles, descriptions, iframes
+  // Get video library titles and full descriptions
   const videoLibraryTitles = videoTitles.filter(title => title !== videoTitles[0]);
   const videoLibraryDescriptions = videoDescriptions.filter(description => description !== videoDescriptions[0]);
-  const videoLibraryIframes = videoIframes.filter(iframe => iframe !== videoIframes[0]);
     
-  // Convert video library variables to jQuery
-  const $videoLibraryTitles = $(videoLibraryTitles);
-  const $videoLibraryDescriptions = $(videoLibraryDescriptions);
-  const $videoLibraryIframes = $(videoLibraryIframes);
+  // Set description excerpt for video library items (shorten full descriptions)
+  videoLibraryDescriptions.forEach((description, i) =>{
+     description.textContent = (description.textContent).substr(0, 100) + '...';
+  });
     
   // Get all elements that allow you to select a new video to play
-  const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryIframes ]
+  const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryImages];
     
   // Click functionality for video library elements
   $(allClickToChooseVideoElements).on('click', function(){
     videoData.forEach((el, i) => {
       if('vid-id-' + el.id === $(this).attr('data-id')) {
         featuredVideoIframe.src = el.url;
-        featuredVideoTitle.textContent = el.name;
+        featuredVideoTitle.textContent = el.title;
         featuredVideoDescription.textContent = el.description;
       }
     })
   });
   
+
   
-  // NEXT TASK IS TO MODIFY HTML SO I CAN ADD A CLICKABLE IMAGE TO THE VIDEO LIBRARY ELEMENTS
  
     
     
