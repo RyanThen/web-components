@@ -163,7 +163,7 @@
   const videoLibraryDescriptions = videoDescriptions.filter(description => description !== videoDescriptions[0]);
     
   // Set description excerpt for video library items (shorten full descriptions)
-  videoLibraryDescriptions.forEach((description, i) =>{
+  videoLibraryDescriptions.forEach((description, i) => {
      description.textContent = (description.textContent).substr(0, 100) + '...';
   });
     
@@ -171,7 +171,7 @@
   const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryImages];
     
   // Click functionality for video library elements
-  $(allClickToChooseVideoElements).on('click', function(){
+  $(allClickToChooseVideoElements).on('click', function() {
     videoData.forEach((el, i) => {
       if('vid-id-' + el.id === $(this).attr('data-id')) {
         featuredVideoIframe.src = el.url;
