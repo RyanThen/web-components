@@ -55,8 +55,10 @@
   <script>
     
   //-- DATA For Videos --//
-    
-  // Initial featured video must be placed in both position 0 and position 1 with id: 1 and id: 2 respectively. No other rules need to be followed for the rest of the items, including id order. //
+  
+  /* Rules for data entry:
+      1. Initial featured video must be placed in both the first and second position with id: 1 and id: 2 respectively
+      2. Every id must be unique */
     
   const videoData = [
     {
@@ -181,7 +183,7 @@
     })
   });
     
-  // Initial active state on video library position 1
+  // Set initial active state on video library position 1
   const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
   videoLibraryPosition1.addClass('video-library-active');
     
