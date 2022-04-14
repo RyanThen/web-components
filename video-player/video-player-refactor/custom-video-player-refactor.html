@@ -2,55 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Video Player Refactor</title>
     
     <style>
       .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
       
+      /* Featured video */
       .featured-video-container { flex: 8; width: 100%; }
       .vid-iframe { width: 700px; height: 395px; }
       
-      .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; }
-      .video-library-container .vp-single-container { margin: 20px 0; }
+      /* Video library */
+      .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; border-radius: 4px; }
+      .video-library-container .vp-single-container { padding: 10px; border: 1px solid transparent; border-radius: 2px; transition: 350ms; }
       .video-library-container .vp-single-container:first-of-type { margin-top: 0; }
       .video-library-container .vp-single-inner { display: grid; grid-template-columns: 1fr 1fr; }
-      .vid-img { width: 100%; }
+      .vid-img { width: 100%; cursor: pointer; }
       .vp-text-container {  }
       .vid-title { margin: 0; padding: 0 5px }
+      .video-library-container .vid-title { cursor: pointer; }
       .vid-desc { margin: 0; padding: 5px; }
+      
+      /* Active class */
+      .video-library-active.vp-single-container { border-color: #666666; transition: 350ms; }
+      .video-library-active .vid-img, .video-library-active .vid-title { pointer-events: none; }
+      .video-library-container .vp-single-container:not(.video-library-active):hover { background-color: 	#e0e0e0; }
+      
+      /* Scrollbar styling */
+      .video-playlist-section *::-webkit-scrollbar { width: 10px; }
+      .video-playlist-section *::-webkit-scrollbar-track { background: lightgrey; }
+      .video-playlist-section *::-webkit-scrollbar-thumb { background-color: #333; border-radius: 20px; border: 3px solid #333; }
     
-/*
-    .video-library-container { overflow-y: scroll; }
-
-    .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
-
-    .vp-featured { flex: 1.5; }
-    .vp-featured-inner { display: flex; flex-direction: column; }
-    .vp-featured-inner > p > iframe { padding-bottom: 15px; }
-    .vp-featured-text { display: flex; flex-direction: column; }
-    .vid-title-first, .vid-title { padding-bottom: 8px; }
-    .vp-featured-text > p { font-size: 16px; max-width: 560px; }
-
-    .video-library-container { max-height: 350px; display: flex; flex-direction: column; flex: 1; justify-content: flex-start; border: 1px solid lightgrey; background-color: #F5F5F5; padding: 8px;}
-    .video-library-container .vp-single-container { display: flex; flex-direction: row; align-items: flex-start; }
-    .video-library-container .vp-text-container { display: flex; flex-direction: column; }
-    .vp-on-deck-inner > p > img { margin-right: 15px; }
-    .vp-on-deck-inner-text > p { font-size: 16px; }
-
-    .vid-iframe { cursor: pointer; border: 2px solid transparent; box-sizing: border-box; transition: 350ms; }
-
-    .video-active { border: 2px solid darkorange; transition: 350ms; }
-
-    .vp-featured .image-popup-vid { width: 560px; }
-    .vp-on-deck-wrapper .image-popup-vid { width: 187px; }
-
     @media(max-width: 600px) {
       .video-playlist-section { flex-direction: column; }
-      #vid-popup-1 { width: 100%; }
-      .vp-on-deck-wrapper { overflow-y: initial; max-height: fit-content; }
-      .vp-on-deck-inner { flex-direction: column; }
+      .vid-img { width: 100%; }
+      .video-library-container { overflow-y: initial; max-height: fit-content; }
+      .video-library-container .vp-single-inner { grid-template-columns: 1fr; }
     }
-*/
     
     </style>
     
@@ -67,7 +55,9 @@
   <script>
     
   //-- DATA For Videos --//
-  // Initial featured video must but placed in position 0 and 1 with id: 1 and id: 2
+    
+  // Initial featured video must be placed in both position 0 and position 1 with id: 1 and id: 2 respectively. No other rules need to be followed for the rest of the items, including id order. //
+    
   const videoData = [
     {
       url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
@@ -95,7 +85,7 @@
       title: 'Tu Marca Personal',
       description: '¿Qué aprenderás en este taller?: Como crear tu Marca personal y tu presencia en línea, Siete estrategias para vender sin vender en redes sociales, Establecer tu Misión como agente inmobiliario, Redactar tu comercial personal de 20 segundos,  y muchas cosas más',
       imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
-      id: 4
+      id: 41
     },
     {
       url: 'https://player.vimeo.com/video/698679105?h=10dfc6ede0',
@@ -115,13 +105,13 @@
     
   // Build Video Player HTML //
   const videoPlayerContainer = document.querySelector('#video-playlist-section');
-
   let videoPlayerTemplate = ``;
 
   const buildVideoPlayerHTML = function() {
 
     videoData.forEach((el, i) => {
       videoPlayerTemplate += `
+
         ${el.id === 1 ? `<div class="featured-video-container">` : ''}
         ${el.id === 2 ? `<div class="video-library-container">` : ''}
 
@@ -146,8 +136,7 @@
         ${el.id === 1 ? `</div>` : ''}
         ${i === videoData.length - 1 ? `</div>` : ''}
         
-      `;
-        
+      `;       
     });
 
     videoPlayerContainer.insertAdjacentHTML('afterbegin', videoPlayerTemplate);
@@ -155,11 +144,9 @@
 
   buildVideoPlayerHTML();
     
-    
-  // Video Player Functionality //
-
-  const featuredVideo = document.querySelector('.vp-single-container:first-of-type');
-  const videoLibrary = document.querySelectorAll('.vp-single-container:not(:first-of-type)');
+  // Get all featured video and video library containers //
+  const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
+  const videoLibrary = document.querySelectorAll('.video-library-container .vp-single-container');
    
   // Get all video titles, descriptions, and video library images from the dom
   const videoTitles = [...document.querySelectorAll('.vid-title')];
@@ -193,82 +180,16 @@
       }
     })
   });
-  
     
+  // Initial active state on video library position 1
+  const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
+  videoLibraryPosition1.addClass('video-library-active');
     
-    
-
-  // Variables
-//  var videoPopup1 = document.getElementById('vid-popup-1');
-//  var videoPopupImg2 = document.getElementById('vid-popup-2');
-//  var videoPopupImg3 = document.getElementById('vid-popup-3');
-//  var videoPopupImg4 = document.getElementById('vid-popup-4');
-//  var videoPopupImg5 = document.getElementById('vid-popup-5');
-//
-//  var videoPopups = document.querySelectorAll('.image-popup-vid');
-//
-//  var videoTitleFirst = document.querySelector('.vid-title-first');
-//  var videoTitles = document.querySelectorAll('.vid-title');
-//  var videoDescriptionsFirst = document.querySelector('.vid-desc-first');
-//  var videoDescriptions = document.querySelectorAll('.vid-desc');
-//
-//  var videoDescriptionsTextArray = [];
-//
-//  // Build above array of full video descriptions (unshortened strings)
-//  for (var i = 0; i < videoDescriptions.length; i++) {
-//    videoDescriptionsTextArray.push(videoDescriptions[i].textContent);
-//  }
-//
-//  // Functions
-//  var setVideoTitleDesc = function(arrayPosition) {
-//    videoTitleFirst.textContent = videoTitles[arrayPosition].textContent;
-//    videoDescriptionsFirst.textContent = videoDescriptionsTextArray[arrayPosition];
-//  }
-//
-//  var removeVideoActive = function() {
-//    for(var i = 0; i < videoPopups.length; i++) {
-//      videoPopups[i].classList.remove('video-active');
-//    }
-//  }
-//
-//  // Logic and Functionality
-//    // Set description excerpt and excerpt length
-//  for (var i = 0; i < videoDescriptions.length; i++) {
-//    videoDescriptions[i].textContent = (videoDescriptions[i].textContent).substr(0, 100) + '...';
-//  }
-//
-//  // Set start video value
-//  videoPopup1.src = 'https://www.youtube.com/embed/T27VErvS1L0';
-//  setVideoTitleDesc(0);
-//
-//  // Videos "on deck"
-//  videoPopupImg2.addEventListener('click', function() {
-//    videoPopup1.src = 'https://www.youtube.com/embed/T27VErvS1L0';
-//    setVideoTitleDesc(0);
-//    removeVideoActive();
-//    videoPopupImg2.classList.add('video-active');
-//  });
-//
-//  videoPopupImg3.addEventListener('click', function() {
-//    videoPopup1.src = 'https://www.youtube.com/embed/P5aLvIlhA0A';
-//    setVideoTitleDesc(1);
-//    removeVideoActive();
-//    videoPopupImg3.classList.add('video-active');
-//  });
-//
-//  videoPopupImg4.addEventListener('click', function() {
-//    videoPopup1.src = 'https://www.youtube.com/embed/KDWATjZf8io';
-//    setVideoTitleDesc(2);
-//    removeVideoActive();
-//    videoPopupImg4.classList.add('video-active');
-//  });
-//
-//  videoPopupImg5.addEventListener('click', function() {
-//    videoPopup1.src = 'https://www.youtube.com/embed/KDWATjZf8io';
-//    setVideoTitleDesc(3);
-//    removeVideoActive();
-//    videoPopupImg5.classList.add('video-active');
-//  });
+  // Add active state to clicked item
+  $(allClickToChooseVideoElements).on('click', function() {
+    $(videoLibrary).removeClass('video-library-active');
+    $(this).closest('.vp-single-container').addClass('video-library-active');
+  });
 
   </script>
     
