@@ -70,6 +70,7 @@
 </head>
 <body>
     
+    
   <!-- Video Playlist Container -->
   <div class="video-playlist-section" id="video-playlist-section"></div>
 
@@ -136,32 +137,32 @@
 
   const buildVideoPlayerHTML = function() {
 
-    videoData.forEach((el, i) => {
+    videoData.forEach((video, index) => {
       videoPlayerTemplate += `
 
-        ${el.id === 1 ? `<div class="featured-video-container">` : ''}
-        ${el.id === 2 ? `<div class="video-library-container">` : ''}
+        ${video.id === 1 ? `<div class="featured-video-container">` : ''}
+        ${video.id === 2 ? `<div class="video-library-container">` : ''}
 
           <div class="vp-single-container">
 
             <div class="vp-single-inner">
-              ${el.id === 1
+              ${video.id === 1
                 ?
-                  `<iframe class="vid-iframe" data-id="vid-id-${el.id}" src="${el.url}" allowfullscreen="allowfullscreen"></iframe>` 
+                  `<iframe class="vid-iframe" data-id="vid-id-${video.id}" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>` 
                 : 
-                  `<img src="${el.imageURL}" class="vid-img" data-id="vid-id-${el.id}">`
+                  `<img src="${video.imageURL}" class="vid-img" data-id="vid-id-${video.id}">`
               }
 
-              <div class="vp-text-container ${el.id === 1 ? 'fade-in-and-up-1' : ''}">
-                <h4 class="vid-title" data-id="vid-id-${el.id}">${el.title}</h4>
-                <p class="vid-desc">${el.description}</p>
+              <div class="vp-text-container ${video.id === 1 ? 'fade-in-and-up-1' : ''}">
+                <h4 class="vid-title" data-id="vid-id-${video.id}">${video.title}</h4>
+                <p class="vid-desc">${video.description}</p>
               </div>
             </div>
 
           </div>
 
-        ${el.id === 1 ? `</div>` : ''}
-        ${i === videoData.length - 1 ? `</div>` : ''}
+        ${video.id === 1 ? `</div>` : ''}
+        ${index === videoData.length - 1 ? `</div>` : ''}
         
       `;       
     });
@@ -175,12 +176,12 @@
   const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
   const videoLibrary = document.querySelectorAll('.video-library-container .vp-single-container');
    
-  // Get all video inner elements from the dom
+  // Get all video inner elements from dom
   const videoTitles = [...document.querySelectorAll('.vid-title')];
   const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
   const videoLibraryImages = [...document.querySelectorAll('.vid-img')];
     
-  // Get featured video inner elements from the dom
+  // Get featured video inner elements from dom
   const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
   const featuredVideoTextContainer = featuredVideo.querySelector('.vp-text-container');
   const featuredVideoTitle = featuredVideo.querySelector('.vid-title');
@@ -195,34 +196,36 @@
      description.textContent = (description.textContent).substr(0, 100) + '...';
   });
     
-  // Get all elements that allow you to select a new video to play
+  // Set initial active state on video library position 1 when page is first loaded
+  const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
+  videoLibraryPosition1.addClass('video-library-active');
+    
+  // Get all elements that allow user to select new video
   const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryImages];
     
   // Click functionality for video library elements
-  $(allClickToChooseVideoElements).on('click', function() {
-    videoData.forEach((el, i) => {
-      if('vid-id-' + el.id === $(this).attr('data-id')) {
-        featuredVideoIframe.src = el.url;
-        featuredVideoTitle.textContent = el.title;
-        featuredVideoDescription.textContent = el.description;
+  $(allClickToChooseVideoElements).on('click', function() { 
+    
+    // Set featured video, title, description
+    videoData.forEach( video => {
+      if('vid-id-' + video.id === $(this).attr('data-id')) {
+        featuredVideoIframe.src = video.url;
+        featuredVideoTitle.textContent = video.title;
+        featuredVideoDescription.textContent = video.description;
       }
-    })
-    // Featured video text animation
+    });
+    
+    // Fire featured video text animation
     $(featuredVideoTextContainer).hasClass('fade-in-and-up-1')
       ?
         $(featuredVideoTextContainer).removeClass('fade-in-and-up-1').addClass('fade-in-and-up-2')
       :
-        $(featuredVideoTextContainer).removeClass('fade-in-and-up-2').addClass('fade-in-and-up-1')
-  });
+        $(featuredVideoTextContainer).removeClass('fade-in-and-up-2').addClass('fade-in-and-up-1');
     
-  // Set initial active state on video library position 1
-  const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
-  videoLibraryPosition1.addClass('video-library-active');
-    
-  // Add active state to clicked item
-  $(allClickToChooseVideoElements).on('click', function() {
+    // Add active state to clicked item
     $(videoLibrary).removeClass('video-library-active');
     $(this).closest('.vp-single-container').addClass('video-library-active');
+    
   });
 
   </script>
