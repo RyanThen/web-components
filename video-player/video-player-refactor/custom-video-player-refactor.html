@@ -14,31 +14,56 @@
       
       /* Video library */
       .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; border-radius: 4px; }
-      .video-library-container .vp-single-container { padding: 10px; border: 1px solid transparent; border-radius: 2px; transition: 350ms; }
+      
+      .video-library-container .vp-single-container { padding: 10px; border: 1px solid transparent; border-radius: 2px; transition: 300ms; }
       .video-library-container .vp-single-container:first-of-type { margin-top: 0; }
+      
       .video-library-container .vp-single-inner { display: grid; grid-template-columns: 1fr 1fr; }
       .vid-img { width: 100%; cursor: pointer; }
       .vp-text-container {  }
-      .vid-title { margin: 0; padding: 0 5px }
+      .vid-title { margin: 0; padding: 0 5px; }
+      .vid-title:hover { color: #243065; }
       .video-library-container .vid-title { cursor: pointer; }
       .vid-desc { margin: 0; padding: 5px; }
       
       /* Active class */
-      .video-library-active.vp-single-container { border-color: #666666; transition: 350ms; }
+      .video-library-active.vp-single-container { border-color: lightgrey; box-shadow: 0px 0px 15px -6px #333; transform: scale(1.015); transition: 300ms; }
       .video-library-active .vid-img, .video-library-active .vid-title { pointer-events: none; }
-      .video-library-container .vp-single-container:not(.video-library-active):hover { background-color: #e0e0e0; }
+      .video-library-active .vid-title { color: #243065; }
+      
+      /* Featured video text animation */
+      .fade-in-and-up-1 { animation: fadeInUp1 700ms ease-in-out forwards; }
+      .fade-in-and-up-2 { animation: fadeInUp2 700ms ease-in-out forwards; }
+      @keyframes fadeInUp1 {
+        0% { opacity: 0; transform: translateY(-25px); }
+        60% { opacity: 0; transform: translateY(-20px); }
+        80% { transform: translateY(5px); }
+        100% { opacity: 1; transform: translateY(0px); }
+      }
+      @keyframes fadeInUp2 {
+        0% { opacity: 0; transform: translateY(-25px); }
+        60% { opacity: 0; transform: translateY(-20px); }
+        80% { transform: translateY(5px); }
+        100% { opacity: 1; transform: translateY(0px); }
+      }
       
       /* Scrollbar styling */
       .video-playlist-section *::-webkit-scrollbar { width: 10px; }
       .video-playlist-section *::-webkit-scrollbar-track { background: lightgrey; }
       .video-playlist-section *::-webkit-scrollbar-thumb { background-color: #333; border-radius: 20px; border: 3px solid #333; }
     
-    @media(max-width: 600px) {
-      .video-playlist-section { flex-direction: column; }
-      .vid-img { width: 100%; }
-      .video-library-container { overflow-y: initial; max-height: fit-content; }
-      .video-library-container .vp-single-inner { grid-template-columns: 1fr; }
-    }
+      /* DESKTOP */
+      @media(min-width: 601px) {
+        .video-library-container .vp-single-container:not(.video-library-active):hover { box-shadow: 0px 0px 15px -9px #333; /*background-color: #e0e0e0;*/ }
+      }
+
+      /* MOBILE */    
+      @media(max-width: 600px) {
+        .video-playlist-section { flex-direction: column; }
+        .vid-img { width: 100%; }
+        .video-library-container { overflow-y: initial; max-height: fit-content; }
+        .video-library-container .vp-single-inner { grid-template-columns: 1fr; }
+      }
     
     </style>
     
@@ -127,7 +152,7 @@
                   `<img src="${el.imageURL}" class="vid-img" data-id="vid-id-${el.id}">`
               }
 
-              <div class="vp-text-container">
+              <div class="vp-text-container ${el.id === 1 ? 'fade-in-and-up-1' : ''}">
                 <h4 class="vid-title" data-id="vid-id-${el.id}">${el.title}</h4>
                 <p class="vid-desc">${el.description}</p>
               </div>
@@ -146,19 +171,20 @@
 
   buildVideoPlayerHTML();
     
-  // Get all featured video and video library containers //
+  // Get all featured video and video library single containers //
   const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
   const videoLibrary = document.querySelectorAll('.video-library-container .vp-single-container');
    
-  // Get all video titles, descriptions, and video library images from the dom
+  // Get all video inner elements from the dom
   const videoTitles = [...document.querySelectorAll('.vid-title')];
   const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
   const videoLibraryImages = [...document.querySelectorAll('.vid-img')];
     
-  // Get featured video titles, descriptions, iframes from the dom
+  // Get featured video inner elements from the dom
+  const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
+  const featuredVideoTextContainer = featuredVideo.querySelector('.vp-text-container');
   const featuredVideoTitle = featuredVideo.querySelector('.vid-title');
   const featuredVideoDescription = featuredVideo.querySelector('.vid-desc');
-  const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
     
   // Get video library titles and full descriptions
   const videoLibraryTitles = videoTitles.filter(title => title !== videoTitles[0]);
@@ -181,6 +207,12 @@
         featuredVideoDescription.textContent = el.description;
       }
     })
+    // Featured video text animation
+    $(featuredVideoTextContainer).hasClass('fade-in-and-up-1')
+      ?
+        $(featuredVideoTextContainer).removeClass('fade-in-and-up-1').addClass('fade-in-and-up-2')
+      :
+        $(featuredVideoTextContainer).removeClass('fade-in-and-up-2').addClass('fade-in-and-up-1')
   });
     
   // Set initial active state on video library position 1
