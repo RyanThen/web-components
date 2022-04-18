@@ -28,8 +28,7 @@
       .vid-desc { margin: 0; padding: 5px; }
       
       /* Active class */
-      .video-library-active.vp-single-container { border-color: lightgrey; box-shadow: 0px 0px 15px -6px #333; transform: scale(1.015); transition: 300ms; }
-      .video-library-active .vid-img, .video-library-active .vid-title { pointer-events: none; }
+      .video-library-active.vp-single-container { border-color: lightgrey; box-shadow: 0px 0px 15px -6px #333; transform: scale(1.015); pointer-events: none; transition: 300ms; }
       .video-library-active .vid-title { color: #243065; }
       
       /* Featured video text animation */
@@ -148,16 +147,16 @@
         ${video.id === 1 ? `<div class="featured-video-container">` : ''}
         ${video.id === 2 ? `<div class="video-library-container">` : ''}
 
-          <div class="vp-single-container">
+          <div class="vp-single-container" data-id="vid-id-${video.id}">
             <div class="vp-single-inner">
               ${video.id === 1
                 ?
-                  `<iframe class="vid-iframe" data-id="vid-id-${video.id}" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>` 
+                  `<iframe class="vid-iframe" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>` 
                 : 
-                  `<img src="${video.imageURL}" class="vid-img" data-id="vid-id-${video.id}">`
+                  `<img src="${video.imageURL}" class="vid-img">`
               }
               <div class="vp-text-container ${video.id === 1 ? 'fade-in-and-up-1' : ''}">
-                <h4 class="vid-title" data-id="vid-id-${video.id}">${video.title}</h4>
+                <h4 class="vid-title">${video.title}</h4>
                 <p class="vid-desc">${video.description}</p>
               </div>
             </div>
@@ -178,10 +177,9 @@
   const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
   const videoLibrary = document.querySelectorAll('.video-library-container .vp-single-container');
    
-  // Get all video inner elements from dom
+  // Get featured video and video library inner elements from dom
   const videoTitles = [...document.querySelectorAll('.vid-title')];
   const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
-  const videoLibraryImages = [...document.querySelectorAll('.vid-img')];
     
   // Get featured video inner elements from dom
   const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
@@ -202,11 +200,8 @@
   const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
   videoLibraryPosition1.addClass('video-library-active');
     
-  // Get all elements that allow user to select new video
-  const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryImages];
-    
   // Click functionality for video library elements
-  $(allClickToChooseVideoElements).on('click', function() { 
+  $(videoLibrary).on('click', function() { 
     
     // Set featured video, title, description
     videoData.forEach( video => {
@@ -226,7 +221,7 @@
     
     // Add active state to clicked item
     $(videoLibrary).removeClass('video-library-active');
-    $(this).closest('.vp-single-container').addClass('video-library-active');
+    $(this).addClass('video-library-active');
 
     // Push user up to featured video upon selecting a new video (non-desktop screen sizes only)
     const mediaQueryMobile = window.matchMedia('(max-width: 1025px)')
