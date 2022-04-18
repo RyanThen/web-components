@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom Video Player Refactor</title>
+    
+    <style>
+      .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
+      
+      /* Featured video */
+      .featured-video-container { flex: 8; width: 100%; }
+      .vid-iframe { width: 700px; height: 395px; }
+      .featured-video-container .vid-title { font-size: 1.6rem; margin: 15px 0 10px 0; }
+      .featured-video-container .vid-desc { font-size: 1.1rem; }
+
+      /* Video library */
+      .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; border-radius: 4px; }
+      
+      .video-library-container .vp-single-container { padding: 10px; border: 1px solid transparent; border-radius: 2px; transition: 300ms; }
+      .video-library-container .vp-single-container:first-of-type { margin-top: 0; }
+      
+      .video-library-container .vp-single-inner { display: grid; grid-template-columns: 1fr 1fr; }
+      .vid-img { width: 100%; cursor: pointer; }
+      .vid-title { margin: 0; padding: 0 5px; }
+      .vid-title:hover { color: #243065; }
+      .video-library-container .vid-title { font-size: 1.2rem; cursor: pointer; }
+      .vid-desc { margin: 0; padding: 5px; }
+      
+      /* Active class */
+      .video-library-active.vp-single-container { border-color: lightgrey; box-shadow: 0px 0px 15px -6px #333; transform: scale(1.015); transition: 300ms; }
+      .video-library-active .vid-img, .video-library-active .vid-title { pointer-events: none; }
+      .video-library-active .vid-title { color: #243065; }
+      
+      /* Featured video text animation */
+      .fade-in-and-up-1 { animation: fadeInUp1 700ms ease-in-out forwards; }
+      .fade-in-and-up-2 { animation: fadeInUp2 700ms ease-in-out forwards; }
+      @keyframes fadeInUp1 {
+        0% { opacity: 0; transform: translateY(-25px); }
+        60% { opacity: 0; transform: translateY(-20px); }
+        80% { transform: translateY(5px); }
+        100% { opacity: 1; transform: translateY(0px); }
+      }
+      @keyframes fadeInUp2 {
+        0% { opacity: 0; transform: translateY(-25px); }
+        60% { opacity: 0; transform: translateY(-20px); }
+        80% { transform: translateY(5px); }
+        100% { opacity: 1; transform: translateY(0px); }
+      }
+      
+      /* Scrollbar styling */
+      .video-playlist-section *::-webkit-scrollbar { width: 10px; }
+      .video-playlist-section *::-webkit-scrollbar-track { background: lightgrey; }
+      .video-playlist-section *::-webkit-scrollbar-thumb { background-color: #333; border-radius: 20px; border: 3px solid #333; }
+    
+      /* DESKTOP */
+      @media (min-width: 1026px) {
+        .video-library-container .vp-single-container:not(.video-library-active):hover { box-shadow: 0px 0px 15px -9px #333; /*background-color: #e0e0e0;*/ }
+      }
+
+      /* TABLET - SMALL DESKTOP */
+      @media (max-width: 1025px) { 
+        .video-playlist-section { flex-direction: column; }
+
+        .vid-iframe { width: 100%; height: auto; min-height: 375px; }
+        .featured-video-container .vid-desc { margin-bottom: 30px; }
+
+        .video-library-container { display: grid; grid-template-columns: 1fr 1fr; overflow-y: initial; max-height: fit-content; }  
+        .vid-img { width: 100%; }
+      }
+
+      /* MOBILE */    
+      @media (max-width: 600px) {
+        .vid-iframe { min-height: 175px; }
+
+        .video-library-container { grid-template-columns: 1fr; }
+        .video-library-container .vp-single-container { margin: 5px 0; }
+        .video-library-container .vp-single-inner { grid-template-columns: 1fr; }
+        .video-library-container .vid-title { margin-top: 10px; }
+      }
+    
+    </style>
+    
+</head>
+<body>
+    
+  <!-- HTML -- Video Playlist Container -- HTML -->
+  <div class="video-playlist-section" id="video-playlist-section"></div>
+
+  <!--jQuery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
+  <script>
+    
+  //-- DATA For Videos --//
+  
+  /* Rules for data entry:
+      1. Initial featured video must be placed in both the first and second position with id: 1 and id: 2 respectively
+      2. Every id must be unique */
+    
+  const videoData = [
+    {
+      url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
+      title: 'Trabajando con Inquilinos',
+      description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      id: 1
+    },
+    {
+      url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
+      title: 'Trabajando con Inquilinos',
+      description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      id: 2
+    },
+    {
+      url: 'https://player.vimeo.com/video/698679349?h=d7f770ec95',
+      title: 'Trabajando con Compradores',
+      description: '¿Qué aprenderás en este taller?: Uso de las redes sociales para encontrar clients, Como Presentar y Negociar las ofertas, Como convertir clientes potenciales en citas, La entrevista con el comprador, y muchas cosas más.',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      id: 3 
+    },
+    {
+      url: 'https://player.vimeo.com/video/698680002?h=ce5bf0faa2',
+      title: 'Tu Marca Personal',
+      description: '¿Qué aprenderás en este taller?: Como crear tu Marca personal y tu presencia en línea, Siete estrategias para vender sin vender en redes sociales, Establecer tu Misión como agente inmobiliario, Redactar tu comercial personal de 20 segundos,  y muchas cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      id: 41
+    },
+    {
+      url: 'https://player.vimeo.com/video/698679105?h=10dfc6ede0',
+      title: 'Trabajando con Vendedores',
+      description: '¿Qué aprenderás en este taller?: Tres estrategias para encontrar clients, Pasos antes de tomar una propiedad para vender, La entrevista con el propietario “Listing presentation”, Como responder correctamente a las objeciones, y mucho cosas más',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      id: 9
+    }
+  ];
+    
+  // Build Video Player HTML //
+  const videoPlayerContainer = document.querySelector('#video-playlist-section');
+  let videoPlayerTemplate = ``;
+
+  const buildVideoPlayerHTML = function() {
+
+    videoData.forEach((video, index) => {
+      videoPlayerTemplate += `
+
+        ${video.id === 1 ? `<div class="featured-video-container">` : ''}
+        ${video.id === 2 ? `<div class="video-library-container">` : ''}
+
+          <div class="vp-single-container">
+            <div class="vp-single-inner">
+              ${video.id === 1
+                ?
+                  `<iframe class="vid-iframe" data-id="vid-id-${video.id}" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>` 
+                : 
+                  `<img src="${video.imageURL}" class="vid-img" data-id="vid-id-${video.id}">`
+              }
+              <div class="vp-text-container ${video.id === 1 ? 'fade-in-and-up-1' : ''}">
+                <h4 class="vid-title" data-id="vid-id-${video.id}">${video.title}</h4>
+                <p class="vid-desc">${video.description}</p>
+              </div>
+            </div>
+          </div>
+          
+        ${video.id === 1 ? `</div>` : ''}
+        ${index === videoData.length - 1 ? `</div>` : ''}
+        
+      `;       
+    });
+
+    videoPlayerContainer.insertAdjacentHTML('afterbegin', videoPlayerTemplate);
+  }
+
+  buildVideoPlayerHTML();
+    
+  // Get all featured video and video library single containers //
+  const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
+  const videoLibrary = document.querySelectorAll('.video-library-container .vp-single-container');
+   
+  // Get all video inner elements from dom
+  const videoTitles = [...document.querySelectorAll('.vid-title')];
+  const videoDescriptions = [...document.querySelectorAll('.vid-desc')];
+  const videoLibraryImages = [...document.querySelectorAll('.vid-img')];
+    
+  // Get featured video inner elements from dom
+  const featuredVideoIframe = featuredVideo.querySelector('.vid-iframe');
+  const featuredVideoTextContainer = featuredVideo.querySelector('.vp-text-container');
+  const featuredVideoTitle = featuredVideo.querySelector('.vid-title');
+  const featuredVideoDescription = featuredVideo.querySelector('.vid-desc');
+    
+  // Get video library titles and full descriptions
+  const videoLibraryTitles = videoTitles.filter(title => title !== videoTitles[0]);
+  const videoLibraryDescriptions = videoDescriptions.filter(description => description !== videoDescriptions[0]);
+    
+  // Set description excerpt for video library items (shorten full descriptions)
+  videoLibraryDescriptions.forEach((description, i) => {
+     description.textContent = (description.textContent).substr(0, 100) + '...';
+  });
+    
+  // Set initial active state on video library position 1 when page is first loaded
+  const videoLibraryPosition1 = $('.video-library-container .vp-single-container:first-of-type');
+  videoLibraryPosition1.addClass('video-library-active');
+    
+  // Get all elements that allow user to select new video
+  const allClickToChooseVideoElements = [...videoLibraryTitles, ...videoLibraryImages];
+    
+  // Click functionality for video library elements
+  $(allClickToChooseVideoElements).on('click', function() { 
+    
+    // Set featured video, title, description
+    videoData.forEach( video => {
+      if('vid-id-' + video.id === $(this).attr('data-id')) {
+        featuredVideoIframe.src = video.url;
+        featuredVideoTitle.textContent = video.title;
+        featuredVideoDescription.textContent = video.description;
+      }
+    });
+    
+    // Fire featured video text animation
+    $(featuredVideoTextContainer).hasClass('fade-in-and-up-1')
+      ?
+        $(featuredVideoTextContainer).removeClass('fade-in-and-up-1').addClass('fade-in-and-up-2')
+      :
+        $(featuredVideoTextContainer).removeClass('fade-in-and-up-2').addClass('fade-in-and-up-1');
+    
+    // Add active state to clicked item
+    $(videoLibrary).removeClass('video-library-active');
+    $(this).closest('.vp-single-container').addClass('video-library-active');
+
+    // Push user up to featured video upon selecting a new video (non-desktop screen sizes only)
+    const mediaQueryMobile = window.matchMedia('(max-width: 1025px)')
+
+    if (mediaQueryMobile.matches) $('html, body').animate({ scrollTop: $("#video-playlist-section").offset().top }, 500);
+     
+  });
+
+  </script>
+    
+</body>
+</html>
