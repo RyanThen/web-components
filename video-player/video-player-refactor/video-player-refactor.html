@@ -7,12 +7,16 @@
     
     <style>
       .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
+      .video-playlist-section * { box-sizing: border-box; }
       
       /* Featured video */
       .featured-video-container { flex: 8; width: 100%; }
-      .vid-iframe { width: 700px; height: 395px; }
-      .featured-video-container .vid-title { font-size: 1.6rem; margin: 15px 0 10px 0; }
-      .featured-video-container .vid-desc { font-size: 1.1rem; }
+      
+      .vid-iframe-container { position: relative; padding-bottom: 53.25%; padding-top: 25px; height: 0; }
+      .vid-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+      .featured-video-container .vid-title { font-size: 1.6rem; margin: 15px 0 10px 0; padding: 0 5px; }
+      .featured-video-container .vid-desc { font-size: 1.1rem; margin: 0; padding: 0 5px; }
 
       /* Video library */
       .video-library-container { flex: 5; max-height: 450px; overflow-y: scroll; padding: 15px; background-color: #f9f9f9; border: 1px solid lightgrey; border-radius: 4px; }
@@ -21,11 +25,11 @@
       .video-library-container .vp-single-container:first-of-type { margin-top: 0; }
       
       .video-library-container .vp-single-inner { display: grid; grid-template-columns: 1fr 1fr; }
+      .video-library-container .vp-text-container { }
       .vid-img { width: 100%; cursor: pointer; }
-      .vid-title { margin: 0; padding: 0 5px; }
-      .vid-title:hover { color: #243065; }
-      .video-library-container .vid-title { font-size: 1.2rem; cursor: pointer; }
-      .vid-desc { margin: 0; padding: 5px; }
+      .video-library-container .vid-title {  margin: 0; padding: 0 5px; font-size: 1.2rem; cursor: pointer; }
+      .video-library-container .vid-title:hover { color: #243065; }
+      .video-library-container .vid-desc { margin: 0; padding: 5px; }
       
       /* Active class */
       .video-library-active.vp-single-container { border-color: lightgrey; box-shadow: 0px 0px 15px -6px #333; transform: scale(1.015); pointer-events: none; transition: 300ms; }
@@ -52,16 +56,21 @@
       .video-playlist-section *::-webkit-scrollbar-track { background: lightgrey; }
       .video-playlist-section *::-webkit-scrollbar-thumb { background-color: #333; border-radius: 20px; border: 3px solid #333; }
     
+      /* LARGE DESKTOP */
+      @media (min-width: 1550px) {
+        .video-playlist-section { max-width: 1500px; margin: 0 auto; }
+      }
+      
       /* DESKTOP */
       @media (min-width: 1026px) {
+        .featured-video-container { margin-right: 25px; }
         .video-library-container .vp-single-container:not(.video-library-active):hover { box-shadow: 0px 0px 15px -9px #333; /*background-color: #e0e0e0;*/ }
       }
 
-      /* TABLET - SMALL DESKTOP */
+      /* TABLET */
       @media (max-width: 1025px) { 
         .video-playlist-section { flex-direction: column; }
 
-        .vid-iframe { width: 100%; height: auto; min-height: 375px; }
         .featured-video-container .vid-desc { margin-bottom: 30px; }
 
         .video-library-container { display: grid; grid-template-columns: 1fr 1fr; overflow-y: initial; max-height: fit-content; }  
@@ -70,8 +79,6 @@
 
       /* MOBILE */    
       @media (max-width: 600px) {
-        .vid-iframe { min-height: 175px; }
-
         .video-library-container { grid-template-columns: 1fr; }
         .video-library-container .vp-single-container { margin: 5px 0; }
         .video-library-container .vp-single-inner { grid-template-columns: 1fr; }
@@ -95,42 +102,43 @@
   
   /* Rules for data entry:
       1. Initial featured video must be placed in both the first and second position with id: 1 and id: 2 respectively
-      2. Every id must be unique */
+      2. Every id must be unique
+      3. id order does not matter (apart from the first two) */
     
   const videoData = [
     {
       url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
       title: 'Trabajando con Inquilinos',
       description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
-      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/trabajando-con-inquilinos-jose-valesquez.png',
       id: 1
     },
     {
       url: 'https://player.vimeo.com/video/698679588?h=359002b90d',
       title: 'Trabajando con Inquilinos',
       description: '¿Qué aprenderás en este taller?: Como usar las redes sociales para buscar Inquilinos, Como conducir una entrevista com los Inquilinos, Como negociar los mejores términos para tus clients, 4 Técnicas para mostrar propiedades, Desarrollo de la transacción de renta de principio a fin, y muchas cosas más',
-      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/trabajando-con-inquilinos-jose-valesquez.png',
       id: 2
     },
     {
       url: 'https://player.vimeo.com/video/698679349?h=d7f770ec95',
       title: 'Trabajando con Compradores',
       description: '¿Qué aprenderás en este taller?: Uso de las redes sociales para encontrar clients, Como Presentar y Negociar las ofertas, Como convertir clientes potenciales en citas, La entrevista con el comprador, y muchas cosas más.',
-      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/trabajando-con-compradores-jose-valesquez.png',
       id: 3 
     },
     {
       url: 'https://player.vimeo.com/video/698680002?h=ce5bf0faa2',
       title: 'Tu Marca Personal',
       description: '¿Qué aprenderás en este taller?: Como crear tu Marca personal y tu presencia en línea, Siete estrategias para vender sin vender en redes sociales, Establecer tu Misión como agente inmobiliario, Redactar tu comercial personal de 20 segundos,  y muchas cosas más',
-      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices.png',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/tu-marca-personal-jose-valesquez.png',
       id: 41
     },
     {
       url: 'https://player.vimeo.com/video/698679105?h=10dfc6ede0',
       title: 'Trabajando con Vendedores',
       description: '¿Qué aprenderás en este taller?: Tres estrategias para encontrar clients, Pasos antes de tomar una propiedad para vender, La entrevista con el propietario “Listing presentation”, Como responder correctamente a las objeciones, y mucho cosas más',
-      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/jose-velasquez-explorando-bienes-raices-2.png',
+      imageURL: 'https://www.hondros.com/wp-content/uploads/2022/04/trabajando-con-vendedores-jose-valesquez.png',
       id: 9
     }
   ];
@@ -151,7 +159,9 @@
             <div class="vp-single-inner">
               ${video.id === 1
                 ?
-                  `<iframe class="vid-iframe" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>` 
+                  `<div class="vid-iframe-container">
+                     <iframe class="vid-iframe" src="${video.url}" allowfullscreen="allowfullscreen"></iframe>
+                   </div>` 
                 : 
                   `<img src="${video.imageURL}" class="vid-img">`
               }
