@@ -139,9 +139,9 @@
   const videoPlayerContainer = document.querySelector('#video-playlist-section');
   let videoPlayerTemplate = ``;
 
-  const buildVideoPlayerHTML = function() {
+  const buildVideoPlayerHTML = function(array, htmlContainer) {
 
-    videoData.forEach((video, index) => {
+    array.forEach((video, index) => {
       videoPlayerTemplate += `
 
         ${video.id === 1 ? `<div class="featured-video-container">` : ''}
@@ -163,15 +163,15 @@
           </div>
           
         ${video.id === 1 ? `</div>` : ''}
-        ${index === videoData.length - 1 ? `</div>` : ''}
+        ${index === array.length - 1 ? `</div>` : ''}
         
       `;       
     });
 
-    videoPlayerContainer.insertAdjacentHTML('afterbegin', videoPlayerTemplate);
+    htmlContainer.insertAdjacentHTML('afterbegin', videoPlayerTemplate);
   }
 
-  buildVideoPlayerHTML();
+  buildVideoPlayerHTML(videoData, videoPlayerContainer);
     
   // Get all featured video and video library single containers //
   const featuredVideo = document.querySelector('.featured-video-container .vp-single-container');
