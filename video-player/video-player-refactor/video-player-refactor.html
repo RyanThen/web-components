@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Custom Video Player Refactor</title>
+    <title>Custom Video Player</title>
     
     <style>
       .video-playlist-section { display: flex; margin: 30px 0; padding: 20px; border: 1px solid lightgrey; }
@@ -151,8 +151,8 @@
   let videoPlayerTemplate = ``;
 
   const buildVideoPlayerHTML = function(array, htmlContainer) {
-
     array.forEach((video, index) => {
+      
       videoPlayerTemplate += `
 
         ${video.id === 1 ? `<div class="featured-video-container">` : ''}
